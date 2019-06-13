@@ -31,6 +31,13 @@ public class UserController {
     public String register(@RequestBody(required = false) User user){
         System.out.println("user"+user);
         userService.register(user);
-        return "";
+        return "世上大师多";
+    }
+
+
+    public String register2(@RequestBody(required = false) User user){
+        System.out.println("user"+user);
+        userService.register(user);
+        return "世上大师多";
     }
 }
