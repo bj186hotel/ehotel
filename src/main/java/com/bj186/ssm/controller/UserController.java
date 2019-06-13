@@ -40,4 +40,11 @@ public class UserController {
         userService.register(user);
         return "世上大师多";
     }
+
+
+    public String register3(@RequestBody(required = false) User user){
+        System.out.println("user"+user);
+        userService.register(user);
+        return "世上大师多";
+    }
 }
