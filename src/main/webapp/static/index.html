@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+<input type="text" id="username" name="username">
+<input type="password" id="password" name="password">
+<button type="submit" id="submit1">登陆</button>
+<a href="/fileUploadPage">上传</a>
+<script>
+    $('#submit1').on("click",function () {
+        var username = $('#username').val();
+        var password = $('#password').val();
+        console.log("username"+username);
+        var json = {customerName:username,customerPwd:password};
+        console.log(JSON.stringify(json));
+        $.ajax({
+            url:"/user/login",   // 请求路径
+            type:"post",            // 请求的方式，不区分大小写
+            cache:false,            // 关闭缓存，目的是为了避免部分浏览器缓存加载出错(IE)
+            contentType:"application/json;charset=utf-8",
+            data:JSON.stringify(json),
+            datatype:"json",        // 返回类型，text文本、html页面、json数据
+            success:function(response){
+                console.log("返回: " + response);
+                console.log("数据: " + JSON.stringify(response));
+            },
+            error:function(response){
+                console.log("出错返回: " + response);
+                console.log("出错数据: " + JSON.stringify(response));
+            }
+        });
+    })
+
+</script>
+</body>
+</html>

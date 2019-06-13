@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--告知spring在创建容器时要扫描的包。当配置了此标签之后，spring创建容器时会去指定的包及其子包下找对应的注解-->
+    <context:component-scan base-package="com.bj186.ssm">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:exclude-filter>
+    </context:component-scan>
+
+    <import resource="classpath:config/spring/spring-bean.xml"/>
+    <import resource="classpath:config/spring/spring-jdbc.xml"/>
+    <import resource="classpath:config/spring/spring-tx.xml"/>
+   <!-- <import resource="classpath:config/spring/spring-config.xml"/>-->
+
+</beans>
