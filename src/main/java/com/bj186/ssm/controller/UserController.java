@@ -28,9 +28,4 @@ public class UserController {
         return "";
     }
 
-    public String register2(@RequestBody(required = false) User user){
-        System.out.println("user"+user);
-        userService.register(user);
-        return "";
-    }
 }
