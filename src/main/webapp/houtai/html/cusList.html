@@ -101,8 +101,8 @@
                     <li class="layui-nav-item layui-nav-itemed">
                         <a href="javascript:;">入住用户管理</a>
                         <dl class="layui-nav-child">
-                            <dd class="layui-this"><a href="user.html">入住用户列表</a></dd>
-                            <dd><a href="useradd.html">用户添加</a></dd>
+                            <dd class="layui-this"><a href="cusList.html">入住用户列表</a></dd>
+                            <dd><a href="cusadd.html">用户添加</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item layui-nav-itemed">
@@ -246,14 +246,15 @@
 
             //查询
             $(".search_btn").click(function () {
-                if ($("#customer_inf_id").val() != '') {
-                    json.customer_inf_id = $("#customer_inf_id").val();
+                var json = {};
+                if ($("#cusId").val() != '') {
+                    json.cusId = $("#cusId").val();
                 }
-                if($("#customer_id").val() != ''){
-                    json.customer_id = $("#customer_id").val();
+                if($("#IDcard").val() != ''){
+                    json.IDcard = $("#IDcard").val();
                 }
-                if($("#customer_name").val() != ''){
-                    json.customer_name = $("#customer_name").val();
+                if($("#cusName").val() != ''){
+                    json.cusName = $("#cusName").val();
                 }
 
                     var index = layer.msg('查询中，请稍候', { icon: 16, time: false, shade: 0.8 });
@@ -274,16 +275,10 @@
                                     , url: `/login` //数据接口
                                     , cols: [[ //表头
                                         { type: 'checkbox', fixed: 'left' },
-                                        { field: 'customer_inf_id', title: '详情编号', width: 80, sort: true, fixed: 'left' }
-                                        , { field: 'customer_id',title: '用户编号', width: 80 ,templet:'<div>{{d.customer_id.customer_id}}</div>'}
-                                        , { field: 'customer_name', title: '昵称', width: 80 }
-                                        , {  title: '头像', width: 80 ,templet:'<div><img src="{{d.customer_img}}"></div>'}
-                                        , { field: 'mobile_phone', title: '手机号', width: 80, sort: true }
-                                        , { field: 'customer_email', title: '邮箱', width: 100 }
-                                        , { field: 'gender', title: '性别', width: 80 }
-                                        , { field: 'user_point', title: '用户积分', width: 80 }
-                                        , { field: 'birthday', title: '生日', width: 100 }
-                                        , { field: 'customer_level', title: '会员等级', width: 80 }
+                                        { field: 'cusId', title: '入住用户编号', width: 120 }
+                                        , { field: 'IDcard',title: '身份证号', width: 200 }
+                                        , { field: 'cusName', title: '姓名', width: 100 }
+                                        , { field: 'remark', title: '备注', width: 400}
                                         , { fixed: 'right', title: '操作', toolbar: '#barDemo', width: 100 }
                                     ]]
                                     , page: true
