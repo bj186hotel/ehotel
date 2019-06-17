@@ -3,8 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/houtai/lib/layui/css/laydate.css">
 </head>
 <body>
+<div class="layui-inline"> <!-- 注意：这一层元素并不是必须的 -->
+    <input type="text" class="layui-input" id="test1">
+</div>
 
+<script src="/houtai/lib/layui/lay/laydate.js"></script>
+<script>
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#test1' //指定元素
+        });
+    });
+</script>
 </body>
 </html>
