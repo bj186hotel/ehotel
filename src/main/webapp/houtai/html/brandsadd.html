@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<!-- 添加用户 -->
+
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8">
+    <meta charset="UTF-8">
+    <title>添加品牌</title>
+    <link rel="icon" href="../images/icon.jpg">
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../lib/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/search.css">
+    <script src="../lib/layui/layui.js"></script>
+    <script src="../lib/jquery-1.10.1.min.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/user-defined.js"></script>
+    <script src="../js/md5.js"></script>
+    <script src="../lib/jquery-3.1.1.min.js"></script>
+
+
+    <script src="../js/token.js"></script>
+</head>
+
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <div class="layui-logo" style="background: url(../images/hlogo.jpg) no-repeat center"></div>
+            <!-- 头部区域（可配合layui已有的水平导航） -->
+            <ul class="layui-nav layui-layout-left" style="height:60px;">
+                <li class="layui-nav-item" style="height:60px;line-height: 65px;"><a href="index.html">首页</a></li>
+
+
+                <div class="layui-form component" style="margin-top:15px;">
+                    <select name="modules" lay-verify="required" lay-search="">
+                        <option value="">直接选择或搜索选择</option>
+                        <option value="1">layer</option>
+                        <option value="2">form</option>
+                        <option value="3">layim</option>
+                        <option value="4">element</option>
+                        <option value="5">laytpl</option>
+                        <option value="6">upload</option>
+                        <option value="7">laydate</option>
+                        <option value="8">laypage</option>
+                        <option value="9">flow</option>
+                        <option value="10">util</option>
+                    </select>
+                    <div class="layui-unselect layui-form-select">
+                        <div class="layui-select-title"><input type="text" placeholder="直接选择或搜索选择" value=""
+                                class="layui-input layui-unselect"><i></i></div>
+                        <dl class="layui-anim layui-anim-upbit">
+                            <dd lay-value="1" class="">layer</dd>
+                            <dd lay-value="2" class="">form</dd>
+                            <dd lay-value="3" class="">layim</dd>
+                            <dd lay-value="4" class="">element</dd>
+                            <dd lay-value="5" class="">laytpl</dd>
+                            <dd lay-value="6" class="">upload</dd>
+                            <dd lay-value="7" class="">laydate</dd>
+                            <dd lay-value="8" class="">laypage</dd>
+                            <dd lay-value="9" class="">flow</dd>
+                            <dd lay-value="10" class="">util</dd>
+                        </dl>
+                    </div>
+                    <i class="layui-icon"></i>
+                </div>
+
+
+                <!-- 天气 -->
+                <li class="layui-nav-item" style="height:60px;line-height: 55px;">
+                    <div class="
+                    weather" pc>
+                        <div id="tp-weather-widget"></div>
+                        <script src="../js/weather.js"></script>
+                    </div>
+                </li>
+            </ul>
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <img src="../images/xxx.jpg" class="layui-nav-img">
+                        <span class="welcome"></span>
+                    </a>
+                </li>
+                <li class="layui-nav-item lockcms" pc>
+                    <a href="javascript:;"><i class="iconfont icon-lock1"></i><cite>锁屏</cite></a>
+                </li>
+                <li class="layui-nav-item loginout"><a href="javascript:;">退出</a></li>
+            </ul>
+        </div>
+
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a class="" href="javascript:;">商品管理</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="goodlist.html">商品列表</a></dd>
+                            <dd><a href="goodsadd2.html">添加商品</a></dd>
+                            <dd><a href="brandlist.html">品牌列表</a></dd>
+                            <dd class="layui-this"><a href="brandsadd.html">添加品牌</a></dd>
+                            <dd><a href="categoryadd.html">商品分类</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a href="javascript:;">用户管理</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="user.html">用户列表</a></dd>
+                            <dd class="layui-this"><a href="useradd.html" id="addusername">用户添加</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a href="javascript:;">订单管理</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="orderlist.html">订单列表</a></dd>
+
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="layui-body">
+            <!-- 内容主体区域 -->
+            <div style="padding: 20px; border: 10px solid #ccc;border-right: none">
+                <span class="layui-breadcrumb">
+                    <a href="index.html">首页</a>
+                    <a href="javascript:;">品牌管理</a>
+                    <a id="brand"><cite>品牌添加</cite></a>
+                </span>
+                <div class="layui-form layui-form-pane" action="" style="padding: 50px; width: 800px;">
+                    <div class="layui-form-item" id="brand_id">
+                        <label class="layui-form-label">品牌编号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="title" id="brand_info_id" autocomplete="off" placeholder="请输入标题" value="0"
+                                   class="layui-input" lay-verify="required">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">品牌名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="title" id="brand_name" autocomplete="off" placeholder="请输品牌名称"
+                                   class="layui-input" lay-verify="required">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">品牌联系电话</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="title" id="telephone" autocomplete="off" placeholder="请输入联系电话"
+                                   class="layui-input" lay-verify="required">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">品牌描述</label>
+                            <div class="layui-input-inline">
+                                <textarea placeholder="请输品牌描述" class="layui-textarea" name="desc" lay-verify="required"
+                                          id="brand_desc"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-upload">
+                        <button type="button" class="layui-btn" id="brand_logo">上传图片</button>
+                        <div class="layui-upload-list">
+                            <img class="layui-upload-img"  id="demo1">
+                            <p id="demoText"></p>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">状态</label>
+                        <div class="layui-input-inline">
+                            <select name="modules" lay-search="" lay-verify="required" id="brand_status">
+                                <option value="0">禁用</option>
+                                <option value="1">启用</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">品牌排序</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="title" id="brand_order" autocomplete="off" placeholder="请输品牌排序"
+                                   class="layui-input" lay-verify="required">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit="" lay-filter="demo1" id="htj">立即提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-footer" style="text-align:center">
+            <!-- 底部固定区域 -->
+            © 2019.2.27 Backstage Management System
+        </div>
+    </div>
+
+    <script>
+        var data = decodeURI(location.search);//获取从列表页传过来的商品id
+        var now = data.slice(1);//切割
+        console.log("now:"+now);
+        if (now) {
+            $('#brand').text('修改品牌')
+            $.ajax({
+                url:'/product',
+                type:'get',
+                data:{'method':'getBrand','brand_info_id':now},
+                dataType:'json',
+                success:function (backData) {
+                    console.log('成功了222'+backData.data[0].brand_status);
+                    console.log("id"+backData.data[0].brand_logo);
+
+                    if(backData.code == 0){
+                        $('#brand_info_id').val(backData.data[0].brand_info_id);
+                        $('#brand_name').val(backData.data[0].brand_name);
+                        $('#telephone').val(backData.data[0].telephone);
+                        $('#brand_desc').val(backData.data[0].brand_desc);
+                        $('#demo1').attr('src',backData.data[0].brand_logo);
+                        $("#brand_logo").val(backData.data[0].brand_logo);
+                        $('#brand_desc').val(backData.data[0].brand_desc);
+                        $('#brand_status option[value='+backData.data[0].brand_status+']').attr("selected","selected");
+                        $('#brand_order').val(backData.data[0].brand_order);
+                    }
+
+                },
+                error:function (e){
+                    console.log(e)
+                }
+            })
+        }else {
+            $("#brand_id").css('display','none');
+        }
+//提交修改
+        $('#htj').on("click",function () {
+            console.log('telephone:'+$('#brand_logo').val())
+            console.log('成功了12'+'brand_logo'+$('#brand_status  option:selected').val());
+            if(now){
+                $.ajax({
+                    url: '/product',
+                    type: 'get',
+                    data: {
+                        'method': 'setBrand',
+                        'brand_info_id': $('#brand_info_id').val(),
+                        'brand_name': $('#brand_name').val(),
+                        'telephone': $('#telephone').val(),
+                        'brand_desc': $('#brand_desc').val(),
+                        'brand_logo': $('#brand_logo').val(),
+                        'brand_desc': $('#brand_desc').val(),
+                        'brand_status': $('#brand_status  option:selected').val(),
+                        'brand_order': $('#brand_order').val(),
+                    },
+                    dataType: 'json',
+                    success: function (backData) {
+                        console.log('成功了' + 'brand_logo' + $('#brand_logo').val());
+
+                        if (backData.code == 0) {
+                            layer.msg('修改成功')
+                            window.location.href = "./brandlist.html";
+                        }
+
+                    },
+                    error: function (e) {
+                        console.log(e)
+                    }
+                })
+            }else {
+                $.ajax({
+                    url: '/product',
+                    type: 'get',
+                    data: {
+                        'method': 'addBrand',
+                        'brand_name': $('#brand_name').val(),
+                        'telephone': $('#telephone').val(),
+                        'brand_desc': $('#brand_desc').val(),
+                        'brand_logo': $('#brand_logo').val(),
+                        'brand_desc': $('#brand_desc').val(),
+                        'brand_status': $('#brand_status  option:selected').val(),
+                        'brand_order': $('#brand_order').val(),
+                    },
+                    dataType: 'json',
+                    success: function (backData) {
+
+                        if (backData.code == 0) {
+                            layer.msg('创建成功')
+                        }
+
+                    },
+                    error: function (e) {
+                        console.log(e)
+                    }
+                })
+            }
+        })
+
+//图片上传
+        layui.use('upload', function() {
+            var $ = layui.jquery
+                , upload = layui.upload;
+
+            //普通图片上传
+            var uploadInst = upload.render({
+                elem: '#brand_logo'
+                , url: '/pictureup'
+                , before: function (obj) {
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function (index, file, result) {
+                        //$('#demo1').attr('src', result); //图片链接（base64）
+                    });
+                }
+                , done: function (res) {
+                    console.log(res)
+                    //如果上传失败
+                    if (res.code = 200) {
+                        $("#brand_logo").attr("value",res.brand_logo);
+                        console.log('hahahhttp://172.16.11.12:8080/');
+                        $('#demo1').attr('src', 'http://localhost:8080/'+$("#brand_logo").val());
+                        $("#brand_logo").val('http://localhost:8080/'+$("#brand_logo").val());
+                        console.log('telephone:'+$('#brand_logo').val())
+                        return layer.msg('上传成功');
+                    }
+                    //上传失败
+                    return layer.msg('上传失败');
+                }
+                , error: function () {
+                    //演示失败状态，并实现重传
+                    var demoText = $('#demoText');
+                    demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                    demoText.find('.demo-reload').on('click', function () {
+                        uploadInst.upload();
+                    });
+                }
+            })
+        })
+
+
+    </script>
+
+    <style>
+        html {
+            user-select: none;
+        }
+
+        a {
+            text-decoration: none !important;
+        }
+    </style>
+
+</body>
+
+</html>
