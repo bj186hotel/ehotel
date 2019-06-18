@@ -5,12 +5,14 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <!--组件扫描-->
     <context:component-scan base-package="com.bj186.ssm">
+        <!--只扫描Cotroller包下的-->
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:include-filter>
     </context:component-scan>
     <!--放行静态资源-->
     <mvc:default-servlet-handler/>
-    <!--放行静态资源，注解也能加载-->
+    <!--加载注解，handler（处理器）映射器，handler（处理器）适配器-->
     <mvc:annotation-driven/>
 
     <!--配置登陆状态拦截器-->
@@ -21,6 +23,7 @@
         </mvc:interceptor>
     </mvc:interceptors>
 
+    <!--jsp的视图解析器-->
 <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
     <property name="prefix" value="/WEB-INF/jsp/"/><!--必须带上跟目录-->
     <property name="suffix" value=".jsp"/>
