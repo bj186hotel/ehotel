@@ -9,56 +9,76 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="format-detection" content="telephone=no">
+	<script src="../../layui/laydate/laydate.js"></script>
 	<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+	<link rel="stylesheet" href="../../layui/laydate/theme/default/laydate.css">
 </head>
 <body class="childrenBody">
-	<form class="layui-form" style="width:80%;">
-		<div class="layui-form-item">
-			<label class="layui-form-label">网站名称</label>
-			<div class="layui-input-block">
-				<input type="text" class="layui-input linksName" lay-verify="required" placeholder="请输入网站名称">
-			</div>
+	<form class="layui-form" >
+	<br>
+	<div class="layui-form-item">
+		<label class="layui-form-label">房间类型：</label>
+		<div class="layui-input-inline">
+			<select name="publish_status" lay-filter="eqptType" id="rtypeId">
+				<option value="">请选择房间类型</option>
+			</select>
 		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">网站地址</label>
-			<div class="layui-input-block">
-				<input type="tel" class="layui-input linksUrl" lay-verify="required|url" placeholder="请输入网站地址">
-			</div>
+
+		<label class="layui-form-label">房间：</label>
+		<div class="layui-input-inline">
+			<select name="publish_status" lay-filter="eqptType" id="roomId2">
+				<option value="">请选择房间</option>
+			</select>
 		</div>
-		<div class="layui-form-item">
-			<div class="layui-inline">
-				<label class="layui-form-label">展示位置</label>
-				<div class="layui-input-block">
-					<input type="checkbox" name="homePage" class="homePage" title="首页" checked>
-					<input type="checkbox" name="subPage" class="subPage" title="子页">
-				</div>
-			</div>
-			<div class="layui-inline">		
-				<label class="layui-form-label">发布时间</label>
-				<div class="layui-input-inline">
-					<input type="text" class="layui-input linksTime" lay-verify="date" onclick="layui.laydate({elem:this})">
-				</div>
-			</div>
+	</div>
+
+	<div class="layui-form-item">
+		<label class="layui-form-label">入住时间：</label>
+		<div class="layui-input-inline">
+			<input type="text" class="layui-input test-item" id="inTime" placeholder="入住日期">
+			<script>
+                //执行一个laydate实例
+                laydate.render({
+                    elem: '#inTime' //指定元素
+                });
+			</script>
 		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">站长邮箱</label>
-			<div class="layui-input-block">
-				<input type="text" class="layui-input masterEmail" lay-verify="email" placeholder="请输入网站地址">
-			</div>
+		<label class="layui-form-label">离店时间：</label>
+		<div class="layui-input-inline">
+			<input type="text" class="layui-input test-item" id="outTime" placeholder="离店日期">
+			<script>
+                //执行一个laydate实例
+                laydate.render({
+                    elem: '#outTime' //指定元素
+                });
+			</script>
 		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">站点描述</label>
-			<div class="layui-input-block">
-				<textarea placeholder="请输入站点描述" class="layui-textarea linksDesc"></textarea>
-			</div>
+
+	</div>
+
+
+	<div class="layui-form-item">
+		<label class="layui-form-label">会员账号：</label>
+		<div class="layui-input-inline">
+			<input type="text" name="memId" class="layui-input" placeholder="手机号或邮箱账号" id="memId">
 		</div>
-		<div class="layui-form-item">
-			<div class="layui-input-block">
-				<button class="layui-btn" lay-submit="" lay-filter="addLinks">立即提交</button>
-				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
-		    </div>
+		<label class="layui-form-label">入住人数：</label>
+		<div class="layui-input-inline">
+			<input type="text" name="memId" class="layui-input" id="personNum">
 		</div>
-	</form>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label">备注：</label>
+		<div class="layui-input-block">
+			<textarea placeholder="请输入内容" class="layui-textarea" name="remark" idremark></textarea>
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-input-block">
+			<button type="button" class="layui-btn layui-btn-normal">提交</button>
+		</div>
+	</div>
+</form>
 	<script type="text/javascript" src="../../layui/layui.js"></script>
 	<script type="text/javascript" src="linksAdd.js"></script>
 </body>

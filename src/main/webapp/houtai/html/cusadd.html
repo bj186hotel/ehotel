@@ -1,3 +1,4 @@
+<!--生成入住单后添加入住用户信息-->
 <!DOCTYPE html>
 <html>
 <!-- 添加用户 -->
@@ -186,6 +187,7 @@
                 success:function(response){
                     console.log("返回: " + response);
                     console.log("数据: " + JSON.stringify(response));
+                    layer.msg('是否继续添加');
                 },
                 error:function(response){
                     console.log("出错返回: " + response);

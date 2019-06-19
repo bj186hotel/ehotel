@@ -58,6 +58,7 @@ layui.config({
 		            			}
 		            		}
 		            		//网站名称
+                            console.log(linksStr);
 		            		if(linksStr.linksName.indexOf(selectStr) > -1){
 			            		linksStr["linksName"] = changeStr(linksStr.linksName);
 		            		}
@@ -180,12 +181,15 @@ layui.config({
 		function renderDate(data,curr){
 			var dataHtml = '';
 			if(!that){
+				console.log(linksData);
 				currData = linksData.concat().splice(curr*nums-nums, nums);
+                console.log(currData);
 			}else{
 				currData = that.concat().splice(curr*nums-nums, nums);
 			}
 			if(currData.length != 0){
 				for(var i=0;i<currData.length;i++){
+                    console.log(data[i]);
 					dataHtml += '<tr>'
 			    	+'<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose"></td>'
 			    	+'<td align="left">'+currData[i].linksName+'</td>'
