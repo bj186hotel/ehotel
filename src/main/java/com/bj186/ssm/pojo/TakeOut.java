@@ -3,16 +3,14 @@ package com.bj186.ssm.pojo;
 import java.util.Date;
 import java.util.List;
 
-public class Takeout {
+public class TakeOut {
     private String takeoutId;
 
     private Date takeoutTime;
 
-    private String userid;
-
     private Integer auditState;
 
-    private byte[] remark;
+    private String remark;
 
     private List<TakeOrder> takeOrders;
 
@@ -34,14 +32,6 @@ public class Takeout {
         this.takeoutTime = takeoutTime;
     }
 
-    public String getUserid() {
-        return userid;
-    }
-
-    public void setUserid(String userid) {
-        this.userid = userid == null ? null : userid.trim();
-    }
-
     public Integer getAuditState() {
         return auditState;
     }
@@ -50,12 +40,12 @@ public class Takeout {
         this.auditState = auditState;
     }
 
-    public byte[] getRemark() {
+    public String getRemark() {
         return remark;
     }
 
-    public void setRemark(byte[] remark) {
-        this.remark = remark;
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
     }
 
     public List<TakeOrder> getTakeOrders() {

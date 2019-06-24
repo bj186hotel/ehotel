@@ -1,28 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.bj186.ssm.mapper.TakeoutMapper">
-  <resultMap id="BaseResultMap" type="com.bj186.ssm.pojo.Takeout">
+<mapper namespace="com.bj186.ssm.mapper.TakeOutMapper">
+  <resultMap id="BaseResultMap" type="com.bj186.ssm.pojo.TakeOut">
     <id column="takeout_Id" jdbcType="VARCHAR" property="takeoutId" />
     <result column="takeout_time" jdbcType="TIMESTAMP" property="takeoutTime" />
-    <result column="userId" jdbcType="VARCHAR" property="userid" />
     <result column="audit_state" jdbcType="INTEGER" property="auditState" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
     <collection column="takeout_order_Id" property="takeOrders" select="getTakeOrders" />
-    <association column="usersId" property="user" select="getUser" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.bj186.ssm.pojo.Takeout">
-    <result column="remark" jdbcType="VARBINARY" property="remark" />
+    <association column="userId" property="user" select="getUser" />
   </resultMap>
   <sql id="Base_Column_List">
-    takeout_Id, takeout_time, userId, audit_state
+    takeout_Id, takeout_time, audit_state, remark
   </sql>
-  <sql id="Blob_Column_List">
-    remark
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from takeout
     where takeout_Id = #{takeoutId,jdbcType=VARCHAR}
   </select>
@@ -30,16 +22,16 @@
     delete from takeout
     where takeout_Id = #{takeoutId,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.bj186.ssm.pojo.Takeout">
+  <insert id="insert" parameterType="com.bj186.ssm.pojo.TakeOut">
     <selectKey keyProperty="takeoutId" order="AFTER" resultType="java.lang.String">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into takeout (takeout_time, userId, audit_state, 
-      remark)
-    values (#{takeoutTime,jdbcType=TIMESTAMP}, #{userid,jdbcType=VARCHAR}, #{auditState,jdbcType=INTEGER}, 
-      #{remark,jdbcType=VARBINARY})
+    insert into takeout (takeout_time, audit_state, remark
+      )
+    values (#{takeoutTime,jdbcType=TIMESTAMP}, #{auditState,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.bj186.ssm.pojo.Takeout">
+  <insert id="insertSelective" parameterType="com.bj186.ssm.pojo.TakeOut">
     <selectKey keyProperty="takeoutId" order="AFTER" resultType="java.lang.String">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -47,9 +39,6 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="takeoutTime != null">
         takeout_time,
-      </if>
-      <if test="userid != null">
-        userId,
       </if>
       <if test="auditState != null">
         audit_state,
@@ -62,54 +51,40 @@
       <if test="takeoutTime != null">
         #{takeoutTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="userid != null">
-        #{userid,jdbcType=VARCHAR},
-      </if>
       <if test="auditState != null">
         #{auditState,jdbcType=INTEGER},
       </if>
       <if test="remark != null">
-        #{remark,jdbcType=VARBINARY},
+        #{remark,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.bj186.ssm.pojo.Takeout">
+  <update id="updateByPrimaryKeySelective" parameterType="com.bj186.ssm.pojo.TakeOut">
     update takeout
     <set>
       <if test="takeoutTime != null">
         takeout_time = #{takeoutTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="userid != null">
-        userId = #{userid,jdbcType=VARCHAR},
-      </if>
       <if test="auditState != null">
         audit_state = #{auditState,jdbcType=INTEGER},
       </if>
       <if test="remark != null">
-        remark = #{remark,jdbcType=VARBINARY},
+        remark = #{remark,jdbcType=VARCHAR},
       </if>
     </set>
     where takeout_Id = #{takeoutId,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.bj186.ssm.pojo.Takeout">
+  <update id="updateByPrimaryKey" parameterType="com.bj186.ssm.pojo.TakeOut">
     update takeout
     set takeout_time = #{takeoutTime,jdbcType=TIMESTAMP},
-      userId = #{userid,jdbcType=VARCHAR},
       audit_state = #{auditState,jdbcType=INTEGER},
-      remark = #{remark,jdbcType=VARBINARY}
-    where takeout_Id = #{takeoutId,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.bj186.ssm.pojo.Takeout">
-    update takeout
-    set takeout_time = #{takeoutTime,jdbcType=TIMESTAMP},
-      userId = #{userid,jdbcType=VARCHAR},
-      audit_state = #{auditState,jdbcType=INTEGER}
+      remark = #{remark,jdbcType=VARCHAR}
     where takeout_Id = #{takeoutId,jdbcType=VARCHAR}
   </update>
   <select id="getTakeOrders" resultMap="com.bj186.ssm.mapper.TakeOrderMapper.BaseResultMap">
-    select takeout_order_Id,takeout_Id,takeout_number from Takeout_order where takeout_order_Id=#{takeoutOrderId} 
+    select takeout_order_Id,takeout_number from Takeout_order where takeout_order_Id=#{takeoutOrderId} 
   </select>
   <select id="getUser" resultMap="com.bj186.ssm.mapper.UserMapper.BaseResultMap">
-    select userid,password,remark from users where userId=#{usersId}
+    select userid,password,remark from users where usersId=#{userId}
   </select>
 </mapper>

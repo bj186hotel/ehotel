@@ -3,7 +3,7 @@ package com.bj186.ssm.pojo;
 import java.util.Date;
 
 public class EnterOrderList {
-    private String enterListId;
+    private Integer enterListId;
 
     private Integer pronNumber1;
 
@@ -17,12 +17,12 @@ public class EnterOrderList {
 
     private Item item;
 
-    public String getEnterListId() {
+    public Integer getEnterListId() {
         return enterListId;
     }
 
-    public void setEnterListId(String enterListId) {
-        this.enterListId = enterListId == null ? null : enterListId.trim();
+    public void setEnterListId(Integer enterListId) {
+        this.enterListId = enterListId;
     }
 
     public Integer getPronNumber1() {

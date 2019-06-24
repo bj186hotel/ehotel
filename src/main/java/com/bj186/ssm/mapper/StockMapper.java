@@ -3,13 +3,13 @@ package com.bj186.ssm.mapper;
 import com.bj186.ssm.pojo.Stock;
 
 public interface StockMapper {
-    int deleteByPrimaryKey(String stockId);
+    int deleteByPrimaryKey(Integer stockId);
 
     int insert(Stock record);
 
     int insertSelective(Stock record);
 
-    Stock selectByPrimaryKey(String stockId);
+    Stock selectByPrimaryKey(Integer stockId);
 
     int updateByPrimaryKeySelective(Stock record);
 

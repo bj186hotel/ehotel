@@ -107,6 +107,6 @@
     select enter_list_ID,pron_number1,pron_number2,modified_time,remark from enter_order_list where depId=#{enterOrderID} 
   </select>
   <select id="getUser" resultMap="com.bj186.ssm.mapper.UserMapper.BaseResultMap">
-    select userid,password,remark from users where userId=#{usersId}
+    select userid,password,remark from users where usersId=#{usersId}
   </select>
 </mapper>

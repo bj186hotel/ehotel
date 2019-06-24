@@ -4,9 +4,9 @@
   <resultMap id="BaseResultMap" type="com.bj186.ssm.pojo.RoomType">
     <id column="rtypeId" jdbcType="INTEGER" property="rtypeid" />
     <result column="rtypeName" jdbcType="VARCHAR" property="rtypename" />
-    <result column="resMon" jdbcType="INTEGER" property="resmon" />
+    <result column="resMon" jdbcType="DOUBLE" property="resmon" />
     <result column="liveNum" jdbcType="INTEGER" property="livenum" />
-    <result column="depMoney" jdbcType="VARCHAR" property="depmoney" />
+    <result column="depMoney" jdbcType="DOUBLE" property="depmoney" />
     <result column="facility" jdbcType="VARCHAR" property="facility" />
     <result column="isfood" jdbcType="INTEGER" property="isfood" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
@@ -32,8 +32,8 @@
     insert into rtype (rtypeName, resMon, liveNum, 
       depMoney, facility, isfood, 
       remark)
-    values (#{rtypename,jdbcType=VARCHAR}, #{resmon,jdbcType=INTEGER}, #{livenum,jdbcType=INTEGER}, 
-      #{depmoney,jdbcType=VARCHAR}, #{facility,jdbcType=VARCHAR}, #{isfood,jdbcType=INTEGER}, 
+    values (#{rtypename,jdbcType=VARCHAR}, #{resmon,jdbcType=DOUBLE}, #{livenum,jdbcType=INTEGER}, 
+      #{depmoney,jdbcType=DOUBLE}, #{facility,jdbcType=VARCHAR}, #{isfood,jdbcType=INTEGER}, 
       #{remark,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.bj186.ssm.pojo.RoomType">
@@ -69,13 +69,13 @@
         #{rtypename,jdbcType=VARCHAR},
       </if>
       <if test="resmon != null">
-        #{resmon,jdbcType=INTEGER},
+        #{resmon,jdbcType=DOUBLE},
       </if>
       <if test="livenum != null">
         #{livenum,jdbcType=INTEGER},
       </if>
       <if test="depmoney != null">
-        #{depmoney,jdbcType=VARCHAR},
+        #{depmoney,jdbcType=DOUBLE},
       </if>
       <if test="facility != null">
         #{facility,jdbcType=VARCHAR},
@@ -95,13 +95,13 @@
         rtypeName = #{rtypename,jdbcType=VARCHAR},
       </if>
       <if test="resmon != null">
-        resMon = #{resmon,jdbcType=INTEGER},
+        resMon = #{resmon,jdbcType=DOUBLE},
       </if>
       <if test="livenum != null">
         liveNum = #{livenum,jdbcType=INTEGER},
       </if>
       <if test="depmoney != null">
-        depMoney = #{depmoney,jdbcType=VARCHAR},
+        depMoney = #{depmoney,jdbcType=DOUBLE},
       </if>
       <if test="facility != null">
         facility = #{facility,jdbcType=VARCHAR},
@@ -118,9 +118,9 @@
   <update id="updateByPrimaryKey" parameterType="com.bj186.ssm.pojo.RoomType">
     update rtype
     set rtypeName = #{rtypename,jdbcType=VARCHAR},
-      resMon = #{resmon,jdbcType=INTEGER},
+      resMon = #{resmon,jdbcType=DOUBLE},
       liveNum = #{livenum,jdbcType=INTEGER},
-      depMoney = #{depmoney,jdbcType=VARCHAR},
+      depMoney = #{depmoney,jdbcType=DOUBLE},
       facility = #{facility,jdbcType=VARCHAR},
       isfood = #{isfood,jdbcType=INTEGER},
       remark = #{remark,jdbcType=VARCHAR}

@@ -7,7 +7,7 @@ public class Room {
 
     private String roomnum;
 
-    private String newprice;
+    private Double newprice;
 
     private Integer promotion;
 
@@ -41,12 +41,12 @@ public class Room {
         this.roomnum = roomnum == null ? null : roomnum.trim();
     }
 
-    public String getNewprice() {
+    public Double getNewprice() {
         return newprice;
     }
 
-    public void setNewprice(String newprice) {
-        this.newprice = newprice == null ? null : newprice.trim();
+    public void setNewprice(Double newprice) {
+        this.newprice = newprice;
     }
 
     public Integer getPromotion() {

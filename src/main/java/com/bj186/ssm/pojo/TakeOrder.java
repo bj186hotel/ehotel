@@ -1,46 +1,36 @@
 package com.bj186.ssm.pojo;
 
 public class TakeOrder {
-    private String takeoutOrderId;
+    private Integer takeoutOrderId;
 
-    private String takeoutId;
+    private Integer takeoutNumber;
 
-    private String takeoutNumber;
-
-    private TakeOrder takeOrder;
+    private TakeOut takeOut;
 
     private Item item;
 
-    public String getTakeoutOrderId() {
+    public Integer getTakeoutOrderId() {
         return takeoutOrderId;
     }
 
-    public void setTakeoutOrderId(String takeoutOrderId) {
-        this.takeoutOrderId = takeoutOrderId == null ? null : takeoutOrderId.trim();
+    public void setTakeoutOrderId(Integer takeoutOrderId) {
+        this.takeoutOrderId = takeoutOrderId;
     }
 
-    public String getTakeoutId() {
-        return takeoutId;
-    }
-
-    public void setTakeoutId(String takeoutId) {
-        this.takeoutId = takeoutId == null ? null : takeoutId.trim();
-    }
-
-    public String getTakeoutNumber() {
+    public Integer getTakeoutNumber() {
         return takeoutNumber;
     }
 
-    public void setTakeoutNumber(String takeoutNumber) {
-        this.takeoutNumber = takeoutNumber == null ? null : takeoutNumber.trim();
+    public void setTakeoutNumber(Integer takeoutNumber) {
+        this.takeoutNumber = takeoutNumber;
     }
 
-    public TakeOrder getTakeOrder() {
-        return takeOrder;
+    public TakeOut getTakeOut() {
+        return takeOut;
     }
 
-    public void setTakeOrder(TakeOrder takeOrder) {
-        this.takeOrder=takeOrder;
+    public void setTakeOut(TakeOut takeOut) {
+        this.takeOut=takeOut;
     }
 
     public Item getItem() {

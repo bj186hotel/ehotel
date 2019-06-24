@@ -3,18 +3,18 @@ package com.bj186.ssm.pojo;
 import java.util.Date;
 
 public class Check {
-    private String checkId;
+    private Integer checkId;
 
     private Date checkTime;
 
     private String remark;
 
-    public String getCheckId() {
+    public Integer getCheckId() {
         return checkId;
     }
 
-    public void setCheckId(String checkId) {
-        this.checkId = checkId == null ? null : checkId.trim();
+    public void setCheckId(Integer checkId) {
+        this.checkId = checkId;
     }
 
     public Date getCheckTime() {

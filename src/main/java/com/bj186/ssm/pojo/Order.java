@@ -7,11 +7,11 @@ public class Order {
 
     private String orderstate;
 
-    private Integer oldprice;
+    private Double oldprice;
 
-    private Integer newprice;
+    private Double newprice;
 
-    private Integer otherprice;
+    private Double otherprice;
 
     private Date ordertime;
 
@@ -45,27 +45,27 @@ public class Order {
         this.orderstate = orderstate == null ? null : orderstate.trim();
     }
 
-    public Integer getOldprice() {
+    public Double getOldprice() {
         return oldprice;
     }
 
-    public void setOldprice(Integer oldprice) {
+    public void setOldprice(Double oldprice) {
         this.oldprice = oldprice;
     }
 
-    public Integer getNewprice() {
+    public Double getNewprice() {
         return newprice;
     }
 
-    public void setNewprice(Integer newprice) {
+    public void setNewprice(Double newprice) {
         this.newprice = newprice;
     }
 
-    public Integer getOtherprice() {
+    public Double getOtherprice() {
         return otherprice;
     }
 
-    public void setOtherprice(Integer otherprice) {
+    public void setOtherprice(Double otherprice) {
         this.otherprice = otherprice;
     }
 

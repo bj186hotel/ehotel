@@ -3,13 +3,13 @@ package com.bj186.ssm.mapper;
 import com.bj186.ssm.pojo.TakeOrder;
 
 public interface TakeOrderMapper {
-    int deleteByPrimaryKey(String takeoutOrderId);
+    int deleteByPrimaryKey(Integer takeoutOrderId);
 
     int insert(TakeOrder record);
 
     int insertSelective(TakeOrder record);
 
-    TakeOrder selectByPrimaryKey(String takeoutOrderId);
+    TakeOrder selectByPrimaryKey(Integer takeoutOrderId);
 
     int updateByPrimaryKeySelective(TakeOrder record);
 

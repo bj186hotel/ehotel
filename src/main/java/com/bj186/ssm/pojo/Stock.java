@@ -1,7 +1,7 @@
 package com.bj186.ssm.pojo;
 
 public class Stock {
-    private String stockId;
+    private Integer stockId;
 
     private Integer count;
 
@@ -9,12 +9,12 @@ public class Stock {
 
     private Item item;
 
-    public String getStockId() {
+    public Integer getStockId() {
         return stockId;
     }
 
-    public void setStockId(String stockId) {
-        this.stockId = stockId == null ? null : stockId.trim();
+    public void setStockId(Integer stockId) {
+        this.stockId = stockId;
     }
 
     public Integer getCount() {

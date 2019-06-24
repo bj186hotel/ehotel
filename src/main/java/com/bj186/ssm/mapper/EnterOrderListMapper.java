@@ -3,13 +3,13 @@ package com.bj186.ssm.mapper;
 import com.bj186.ssm.pojo.EnterOrderList;
 
 public interface EnterOrderListMapper {
-    int deleteByPrimaryKey(String enterListId);
+    int deleteByPrimaryKey(Integer enterListId);
 
     int insert(EnterOrderList record);
 
     int insertSelective(EnterOrderList record);
 
-    EnterOrderList selectByPrimaryKey(String enterListId);
+    EnterOrderList selectByPrimaryKey(Integer enterListId);
 
     int updateByPrimaryKeySelective(EnterOrderList record);
 

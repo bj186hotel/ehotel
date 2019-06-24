@@ -1,7 +1,7 @@
 package com.bj186.ssm.pojo;
 
 public class CheckOrder {
-    private String checkOrderId;
+    private Integer checkOrderId;
 
     private String remark;
 
@@ -9,12 +9,12 @@ public class CheckOrder {
 
     private EnterOrder enterOrder;
 
-    public String getCheckOrderId() {
+    public Integer getCheckOrderId() {
         return checkOrderId;
     }
 
-    public void setCheckOrderId(String checkOrderId) {
-        this.checkOrderId = checkOrderId == null ? null : checkOrderId.trim();
+    public void setCheckOrderId(Integer checkOrderId) {
+        this.checkOrderId = checkOrderId;
     }
 
     public String getRemark() {

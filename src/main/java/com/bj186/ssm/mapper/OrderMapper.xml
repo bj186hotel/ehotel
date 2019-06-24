@@ -4,9 +4,9 @@
   <resultMap id="BaseResultMap" type="com.bj186.ssm.pojo.Order">
     <id column="orderId" jdbcType="INTEGER" property="orderid" />
     <result column="orderstate" jdbcType="VARCHAR" property="orderstate" />
-    <result column="oldprice" jdbcType="INTEGER" property="oldprice" />
-    <result column="newprice" jdbcType="INTEGER" property="newprice" />
-    <result column="otherprice" jdbcType="INTEGER" property="otherprice" />
+    <result column="oldprice" jdbcType="DOUBLE" property="oldprice" />
+    <result column="newprice" jdbcType="DOUBLE" property="newprice" />
+    <result column="otherprice" jdbcType="DOUBLE" property="otherprice" />
     <result column="ordertime" jdbcType="DATE" property="ordertime" />
     <result column="personNum" jdbcType="INTEGER" property="personnum" />
     <result column="inTime" jdbcType="TIMESTAMP" property="intime" />
@@ -38,8 +38,8 @@
       otherprice, ordertime, personNum, 
       inTime, outTime, remark
       )
-    values (#{orderstate,jdbcType=VARCHAR}, #{oldprice,jdbcType=INTEGER}, #{newprice,jdbcType=INTEGER}, 
-      #{otherprice,jdbcType=INTEGER}, #{ordertime,jdbcType=DATE}, #{personnum,jdbcType=INTEGER}, 
+    values (#{orderstate,jdbcType=VARCHAR}, #{oldprice,jdbcType=DOUBLE}, #{newprice,jdbcType=DOUBLE}, 
+      #{otherprice,jdbcType=DOUBLE}, #{ordertime,jdbcType=DATE}, #{personnum,jdbcType=INTEGER}, 
       #{intime,jdbcType=TIMESTAMP}, #{outtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
       )
   </insert>
@@ -82,13 +82,13 @@
         #{orderstate,jdbcType=VARCHAR},
       </if>
       <if test="oldprice != null">
-        #{oldprice,jdbcType=INTEGER},
+        #{oldprice,jdbcType=DOUBLE},
       </if>
       <if test="newprice != null">
-        #{newprice,jdbcType=INTEGER},
+        #{newprice,jdbcType=DOUBLE},
       </if>
       <if test="otherprice != null">
-        #{otherprice,jdbcType=INTEGER},
+        #{otherprice,jdbcType=DOUBLE},
       </if>
       <if test="ordertime != null">
         #{ordertime,jdbcType=DATE},
@@ -114,13 +114,13 @@
         orderstate = #{orderstate,jdbcType=VARCHAR},
       </if>
       <if test="oldprice != null">
-        oldprice = #{oldprice,jdbcType=INTEGER},
+        oldprice = #{oldprice,jdbcType=DOUBLE},
       </if>
       <if test="newprice != null">
-        newprice = #{newprice,jdbcType=INTEGER},
+        newprice = #{newprice,jdbcType=DOUBLE},
       </if>
       <if test="otherprice != null">
-        otherprice = #{otherprice,jdbcType=INTEGER},
+        otherprice = #{otherprice,jdbcType=DOUBLE},
       </if>
       <if test="ordertime != null">
         ordertime = #{ordertime,jdbcType=DATE},
@@ -143,9 +143,9 @@
   <update id="updateByPrimaryKey" parameterType="com.bj186.ssm.pojo.Order">
     update order
     set orderstate = #{orderstate,jdbcType=VARCHAR},
-      oldprice = #{oldprice,jdbcType=INTEGER},
-      newprice = #{newprice,jdbcType=INTEGER},
-      otherprice = #{otherprice,jdbcType=INTEGER},
+      oldprice = #{oldprice,jdbcType=DOUBLE},
+      newprice = #{newprice,jdbcType=DOUBLE},
+      otherprice = #{otherprice,jdbcType=DOUBLE},
       ordertime = #{ordertime,jdbcType=DATE},
       personNum = #{personnum,jdbcType=INTEGER},
       inTime = #{intime,jdbcType=TIMESTAMP},

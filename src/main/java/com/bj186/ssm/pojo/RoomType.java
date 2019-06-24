@@ -7,11 +7,11 @@ public class RoomType {
 
     private String rtypename;
 
-    private Integer resmon;
+    private Double resmon;
 
     private Integer livenum;
 
-    private String depmoney;
+    private Double depmoney;
 
     private String facility;
 
@@ -37,11 +37,11 @@ public class RoomType {
         this.rtypename = rtypename == null ? null : rtypename.trim();
     }
 
-    public Integer getResmon() {
+    public Double getResmon() {
         return resmon;
     }
 
-    public void setResmon(Integer resmon) {
+    public void setResmon(Double resmon) {
         this.resmon = resmon;
     }
 
@@ -53,12 +53,12 @@ public class RoomType {
         this.livenum = livenum;
     }
 
-    public String getDepmoney() {
+    public Double getDepmoney() {
         return depmoney;
     }
 
-    public void setDepmoney(String depmoney) {
-        this.depmoney = depmoney == null ? null : depmoney.trim();
+    public void setDepmoney(Double depmoney) {
+        this.depmoney = depmoney;
     }
 
     public String getFacility() {
