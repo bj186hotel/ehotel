@@ -8,8 +8,8 @@
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="modified_time2" jdbcType="TIMESTAMP" property="modifiedTime2" />
     <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
-    <collection column="enter_order_ID" property="enterOrderLists" select="getEnterOrderLists" />
     <association column="usersId" property="user" select="getUser" />
+    <collection column="enter_order_ID" property="enterOrderLists" select="getEnterOrderLists" />
   </resultMap>
   <sql id="Base_Column_List">
     enter_order_ID, cost_money, cost_money2, status, modified_time2, modified_time

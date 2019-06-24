@@ -1,19 +1,17 @@
 package com.bj186.ssm.mapper;
 
-import com.bj186.ssm.pojo.Takeout;
+import com.bj186.ssm.pojo.TakeOut;
 
-public interface TakeoutMapper {
+public interface TakeOutMapper {
     int deleteByPrimaryKey(String takeoutId);
 
-    int insert(Takeout record);
+    int insert(TakeOut record);
 
-    int insertSelective(Takeout record);
+    int insertSelective(TakeOut record);
 
-    Takeout selectByPrimaryKey(String takeoutId);
+    TakeOut selectByPrimaryKey(String takeoutId);
 
-    int updateByPrimaryKeySelective(Takeout record);
+    int updateByPrimaryKeySelective(TakeOut record);
 
-    int updateByPrimaryKeyWithBLOBs(Takeout record);
-
-    int updateByPrimaryKey(Takeout record);
+    int updateByPrimaryKey(TakeOut record);
 }

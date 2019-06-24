@@ -9,10 +9,10 @@
     <result column="defImg" jdbcType="VARCHAR" property="defimg" />
     <result column="state" jdbcType="INTEGER" property="state" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <association column="rtypeId" property="roomType" select="getRoomType" />
     <collection column="roomId" property="roomImgs" select="getRoomImgs" />
     <collection column="roomId" property="orders" select="getOrders" />
     <collection column="commId" property="comments" select="getComments" />
-    <association column="rtypeId" property="roomType" select="getRoomType" />
   </resultMap>
   <sql id="Base_Column_List">
     roomId, roomNum, newPrice, promotion, defImg, state, remark

@@ -6,8 +6,8 @@
     <result column="takeout_time" jdbcType="TIMESTAMP" property="takeoutTime" />
     <result column="audit_state" jdbcType="INTEGER" property="auditState" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
-    <collection column="takeout_order_Id" property="takeOrders" select="getTakeOrders" />
     <association column="userId" property="user" select="getUser" />
+    <collection column="takeout_order_Id" property="takeOrders" select="getTakeOrders" />
   </resultMap>
   <sql id="Base_Column_List">
     takeout_Id, takeout_time, audit_state, remark
