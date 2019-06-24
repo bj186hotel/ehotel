@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bj186.ssm.mapper.MemberMapper">
+  <resultMap id="BaseResultMap" type="com.bj186.ssm.pojo.Member">
+    <id column="memId" jdbcType="INTEGER" property="memid" />
+    <result column="menNum" jdbcType="VARCHAR" property="mennum" />
+    <result column="memName" jdbcType="VARCHAR" property="memname" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="memPaw" jdbcType="VARCHAR" property="mempaw" />
+    <result column="memsex" jdbcType="VARCHAR" property="memsex" />
+    <result column="IDCard" jdbcType="VARCHAR" property="idcard" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="memInt" jdbcType="INTEGER" property="memint" />
+    <result column="discount" jdbcType="DOUBLE" property="discount" />
+    <result column="regisdate" jdbcType="TIMESTAMP" property="regisdate" />
+    <result column="userstate" jdbcType="VARCHAR" property="userstate" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <collection column="memId" property="orders" select="getOrders" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    memId, menNum, memName, phone, memPaw, memsex, IDCard, email, memInt, discount, regisdate, 
+    userstate, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from member
+    where memId = #{memid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from member
+    where memId = #{memid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bj186.ssm.pojo.Member">
+    <selectKey keyProperty="memid" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into member (menNum, memName, phone, 
+      memPaw, memsex, IDCard, 
+      email, memInt, discount, 
+      regisdate, userstate, remark
+      )
+    values (#{mennum,jdbcType=VARCHAR}, #{memname,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{mempaw,jdbcType=VARCHAR}, #{memsex,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{memint,jdbcType=INTEGER}, #{discount,jdbcType=DOUBLE}, 
+      #{regisdate,jdbcType=TIMESTAMP}, #{userstate,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bj186.ssm.pojo.Member">
+    <selectKey keyProperty="memid" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into member
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mennum != null">
+        menNum,
+      </if>
+      <if test="memname != null">
+        memName,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="mempaw != null">
+        memPaw,
+      </if>
+      <if test="memsex != null">
+        memsex,
+      </if>
+      <if test="idcard != null">
+        IDCard,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="memint != null">
+        memInt,
+      </if>
+      <if test="discount != null">
+        discount,
+      </if>
+      <if test="regisdate != null">
+        regisdate,
+      </if>
+      <if test="userstate != null">
+        userstate,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mennum != null">
+        #{mennum,jdbcType=VARCHAR},
+      </if>
+      <if test="memname != null">
+        #{memname,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mempaw != null">
+        #{mempaw,jdbcType=VARCHAR},
+      </if>
+      <if test="memsex != null">
+        #{memsex,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null">
+        #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="memint != null">
+        #{memint,jdbcType=INTEGER},
+      </if>
+      <if test="discount != null">
+        #{discount,jdbcType=DOUBLE},
+      </if>
+      <if test="regisdate != null">
+        #{regisdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userstate != null">
+        #{userstate,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bj186.ssm.pojo.Member">
+    update member
+    <set>
+      <if test="mennum != null">
+        menNum = #{mennum,jdbcType=VARCHAR},
+      </if>
+      <if test="memname != null">
+        memName = #{memname,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mempaw != null">
+        memPaw = #{mempaw,jdbcType=VARCHAR},
+      </if>
+      <if test="memsex != null">
+        memsex = #{memsex,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null">
+        IDCard = #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="memint != null">
+        memInt = #{memint,jdbcType=INTEGER},
+      </if>
+      <if test="discount != null">
+        discount = #{discount,jdbcType=DOUBLE},
+      </if>
+      <if test="regisdate != null">
+        regisdate = #{regisdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userstate != null">
+        userstate = #{userstate,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where memId = #{memid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bj186.ssm.pojo.Member">
+    update member
+    set menNum = #{mennum,jdbcType=VARCHAR},
+      memName = #{memname,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      memPaw = #{mempaw,jdbcType=VARCHAR},
+      memsex = #{memsex,jdbcType=VARCHAR},
+      IDCard = #{idcard,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      memInt = #{memint,jdbcType=INTEGER},
+      discount = #{discount,jdbcType=DOUBLE},
+      regisdate = #{regisdate,jdbcType=TIMESTAMP},
+      userstate = #{userstate,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where memId = #{memid,jdbcType=INTEGER}
+  </update>
+  <select id="getOrders" resultMap="com.bj186.ssm.mapper.OrderMapper.BaseResultMap">
+    select orderId,orderstate,oldprice,newprice,otherprice,ordertime,personNum,inTime,outTime,remark from order where memId=#{memId} 
+  </select>
+</mapper>

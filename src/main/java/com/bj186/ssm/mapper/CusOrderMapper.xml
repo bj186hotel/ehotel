@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bj186.ssm.mapper.CusOrderMapper">
+  <resultMap id="BaseResultMap" type="com.bj186.ssm.pojo.CusOrder">
+    <id column="cusorderId" jdbcType="INTEGER" property="cusorderid" />
+    <association column="cusId" property="customer" select="getCustomer" />
+    <association column="orderId" property="order" select="getOrder" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cusandorder
+    where cusorderId = #{cusorderid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bj186.ssm.pojo.CusOrder">
+    insert into cusandorder (cusorderId)
+    values (#{cusorderid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bj186.ssm.pojo.CusOrder">
+    insert into cusandorder
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cusorderid != null">
+        cusorderId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cusorderid != null">
+        #{cusorderid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="getCustomer" resultMap="com.bj186.ssm.mapper.CustomerMapper.BaseResultMap">
+    select cusId,IDcard,cusName,remark from customer where cusId=#{cusId}
+  </select>
+  <select id="getOrder" resultMap="com.bj186.ssm.mapper.OrderMapper.BaseResultMap">
+    select orderId,orderstate,oldprice,newprice,otherprice,ordertime,personNum,inTime,outTime,remark from order where orderId=#{orderId}
+  </select>
+</mapper>

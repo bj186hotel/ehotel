@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bj186.ssm.mapper.ItemMapper">
+  <resultMap id="BaseResultMap" type="com.bj186.ssm.pojo.Item">
+    <id column="itemId" jdbcType="INTEGER" property="itemid" />
+    <result column="itemName" jdbcType="VARCHAR" property="itemname" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="enterprice" jdbcType="DECIMAL" property="enterprice" />
+    <result column="sellprice" jdbcType="DECIMAL" property="sellprice" />
+    <association column="typeId" property="itemType" select="getItemType" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    itemId, itemName, unit, enterprice, sellprice
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from iteminfo
+    where itemId = #{itemid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from iteminfo
+    where itemId = #{itemid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bj186.ssm.pojo.Item">
+    <selectKey keyProperty="itemid" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into iteminfo (itemName, unit, enterprice, 
+      sellprice)
+    values (#{itemname,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, #{enterprice,jdbcType=DECIMAL}, 
+      #{sellprice,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bj186.ssm.pojo.Item">
+    <selectKey keyProperty="itemid" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into iteminfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="itemname != null">
+        itemName,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+      <if test="enterprice != null">
+        enterprice,
+      </if>
+      <if test="sellprice != null">
+        sellprice,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="itemname != null">
+        #{itemname,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="enterprice != null">
+        #{enterprice,jdbcType=DECIMAL},
+      </if>
+      <if test="sellprice != null">
+        #{sellprice,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bj186.ssm.pojo.Item">
+    update iteminfo
+    <set>
+      <if test="itemname != null">
+        itemName = #{itemname,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="enterprice != null">
+        enterprice = #{enterprice,jdbcType=DECIMAL},
+      </if>
+      <if test="sellprice != null">
+        sellprice = #{sellprice,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where itemId = #{itemid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bj186.ssm.pojo.Item">
+    update iteminfo
+    set itemName = #{itemname,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      enterprice = #{enterprice,jdbcType=DECIMAL},
+      sellprice = #{sellprice,jdbcType=DECIMAL}
+    where itemId = #{itemid,jdbcType=INTEGER}
+  </update>
+  <select id="getItemType" resultMap="com.bj186.ssm.mapper.ItemTypeMapper.BaseResultMap">
+    select typeId,typeName from typeInfo where typeId=#{typeId}
+  </select>
+</mapper>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bj186.ssm.mapper.TakeOrderMapper">
+  <resultMap id="BaseResultMap" type="com.bj186.ssm.pojo.TakeOrder">
+    <id column="takeout_order_Id" jdbcType="VARCHAR" property="takeoutOrderId" />
+    <result column="takeout_Id" jdbcType="VARCHAR" property="takeoutId" />
+    <result column="takeout_number" jdbcType="VARCHAR" property="takeoutNumber" />
+    <association column="takeout_order_Id" property="takeOrder" select="getTakeOrder" />
+    <association column="good_id" property="item" select="getItem" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    takeout_order_Id, takeout_Id, takeout_number
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from takeout_order
+    where takeout_order_Id = #{takeoutOrderId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from takeout_order
+    where takeout_order_Id = #{takeoutOrderId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bj186.ssm.pojo.TakeOrder">
+    <selectKey keyProperty="takeoutOrderId" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into takeout_order (takeout_Id, takeout_number)
+    values (#{takeoutId,jdbcType=VARCHAR}, #{takeoutNumber,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bj186.ssm.pojo.TakeOrder">
+    <selectKey keyProperty="takeoutOrderId" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into takeout_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="takeoutId != null">
+        takeout_Id,
+      </if>
+      <if test="takeoutNumber != null">
+        takeout_number,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="takeoutId != null">
+        #{takeoutId,jdbcType=VARCHAR},
+      </if>
+      <if test="takeoutNumber != null">
+        #{takeoutNumber,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bj186.ssm.pojo.TakeOrder">
+    update takeout_order
+    <set>
+      <if test="takeoutId != null">
+        takeout_Id = #{takeoutId,jdbcType=VARCHAR},
+      </if>
+      <if test="takeoutNumber != null">
+        takeout_number = #{takeoutNumber,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where takeout_order_Id = #{takeoutOrderId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bj186.ssm.pojo.TakeOrder">
+    update takeout_order
+    set takeout_Id = #{takeoutId,jdbcType=VARCHAR},
+      takeout_number = #{takeoutNumber,jdbcType=VARCHAR}
+    where takeout_order_Id = #{takeoutOrderId,jdbcType=VARCHAR}
+  </update>
+  <select id="getTakeOrder" resultMap="com.bj186.ssm.mapper.TakeOrderMapper.BaseResultMap">
+    select takeout_order_Id,takeout_Id,takeout_number from Takeout_order where takeout_order_Id=#{takeoutOrderId}
+  </select>
+  <select id="getItem" resultMap="com.bj186.ssm.mapper.ItemMapper.BaseResultMap">
+    select itemId,itemName,unit,enterprice,sellprice from itemInfo where itemId=#{goodId}
+  </select>
+</mapper>

@@ -1,19 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bj186.ssm.mapper.UserMapper">
-  <resultMap id="BaseResultMap" type="User">
-    <id column="customer_id" jdbcType="INTEGER" property="customerId" />
-    <result column="customer_name" jdbcType="VARCHAR" property="customerName" />
-    <result column="customer_pwd" jdbcType="VARCHAR" property="customerPwd" />
+  <resultMap id="BaseResultMap" type="com.bj186.ssm.pojo.User">
+    <id column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <association column="empId" property="staff" select="getStaff" />
   </resultMap>
   <sql id="Base_Column_List">
-    customer_id, customer_name, customer_pwd
+    userid, password, remark
   </sql>
-  <insert id="insert" parameterType="User">
-    insert into customers (customer_id, customer_name, customer_pwd
-      )
-    values (#{customerId,jdbcType=INTEGER}, #{customerName,jdbcType=VARCHAR}, #{customerPwd,jdbcType=VARCHAR}
-      )
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from users
+    where userid = #{userid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from users
+    where userid = #{userid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bj186.ssm.pojo.User">
+    <selectKey keyProperty="userid" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into users (password, remark)
+    values (#{password,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
   </insert>
-
+  <insert id="insertSelective" parameterType="com.bj186.ssm.pojo.User">
+    <selectKey keyProperty="userid" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into users
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="password != null">
+        password,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bj186.ssm.pojo.User">
+    update users
+    <set>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where userid = #{userid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bj186.ssm.pojo.User">
+    update users
+    set password = #{password,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where userid = #{userid,jdbcType=INTEGER}
+  </update>
+  <select id="getStaff" resultMap="com.bj186.ssm.mapper.StaffMapper.BaseResultMap">
+    select empId,empName,empSex,empAge,empPhone,empWage,empEmail,empPay,empLastTime,remark from emp where empId=#{empId}
+  </select>
 </mapper>

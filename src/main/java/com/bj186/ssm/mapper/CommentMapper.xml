@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bj186.ssm.mapper.CommentMapper">
+  <resultMap id="BaseResultMap" type="com.bj186.ssm.pojo.Comment">
+    <id column="commId" jdbcType="INTEGER" property="commid" />
+    <result column="commText" jdbcType="VARCHAR" property="commtext" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <association column="roomId" property="room" select="getRoom" />
+    <association column="memId" property="member" select="getMember" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    commId, commText, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from comm
+    where commId = #{commid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from comm
+    where commId = #{commid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bj186.ssm.pojo.Comment">
+    <selectKey keyProperty="commid" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into comm (commText, remark)
+    values (#{commtext,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bj186.ssm.pojo.Comment">
+    <selectKey keyProperty="commid" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into comm
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="commtext != null">
+        commText,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="commtext != null">
+        #{commtext,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bj186.ssm.pojo.Comment">
+    update comm
+    <set>
+      <if test="commtext != null">
+        commText = #{commtext,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where commId = #{commid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bj186.ssm.pojo.Comment">
+    update comm
+    set commText = #{commtext,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where commId = #{commid,jdbcType=INTEGER}
+  </update>
+  <select id="getRoom" resultMap="com.bj186.ssm.mapper.RoomMapper.BaseResultMap">
+    select roomId,roomNum,newPrice,promotion,defImg,state,remark from room where roomId=#{roomId}
+  </select>
+  <select id="getMember" resultMap="com.bj186.ssm.mapper.MemberMapper.BaseResultMap">
+    select memId,menNum,memName,phone,memPaw,memsex,IDCard,email,memInt,discount,regisdate,userstate,remark from member where memId=#{memId}
+  </select>
+</mapper>

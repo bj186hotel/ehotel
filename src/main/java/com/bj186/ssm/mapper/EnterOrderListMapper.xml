@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bj186.ssm.mapper.EnterOrderListMapper">
+  <resultMap id="BaseResultMap" type="com.bj186.ssm.pojo.EnterOrderList">
+    <id column="enter_list_ID" jdbcType="VARCHAR" property="enterListId" />
+    <result column="pron_number1" jdbcType="INTEGER" property="pronNumber1" />
+    <result column="pron_number2" jdbcType="INTEGER" property="pronNumber2" />
+    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <association column="enter_order_ID" property="enterOrder" select="getEnterOrder" />
+    <association column="Goods_id" property="item" select="getItem" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    enter_list_ID, pron_number1, pron_number2, modified_time, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from enter_order_list
+    where enter_list_ID = #{enterListId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from enter_order_list
+    where enter_list_ID = #{enterListId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bj186.ssm.pojo.EnterOrderList">
+    <selectKey keyProperty="enterListId" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into enter_order_list (pron_number1, pron_number2, modified_time, 
+      remark)
+    values (#{pronNumber1,jdbcType=INTEGER}, #{pronNumber2,jdbcType=INTEGER}, #{modifiedTime,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bj186.ssm.pojo.EnterOrderList">
+    <selectKey keyProperty="enterListId" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into enter_order_list
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pronNumber1 != null">
+        pron_number1,
+      </if>
+      <if test="pronNumber2 != null">
+        pron_number2,
+      </if>
+      <if test="modifiedTime != null">
+        modified_time,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pronNumber1 != null">
+        #{pronNumber1,jdbcType=INTEGER},
+      </if>
+      <if test="pronNumber2 != null">
+        #{pronNumber2,jdbcType=INTEGER},
+      </if>
+      <if test="modifiedTime != null">
+        #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bj186.ssm.pojo.EnterOrderList">
+    update enter_order_list
+    <set>
+      <if test="pronNumber1 != null">
+        pron_number1 = #{pronNumber1,jdbcType=INTEGER},
+      </if>
+      <if test="pronNumber2 != null">
+        pron_number2 = #{pronNumber2,jdbcType=INTEGER},
+      </if>
+      <if test="modifiedTime != null">
+        modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where enter_list_ID = #{enterListId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bj186.ssm.pojo.EnterOrderList">
+    update enter_order_list
+    set pron_number1 = #{pronNumber1,jdbcType=INTEGER},
+      pron_number2 = #{pronNumber2,jdbcType=INTEGER},
+      modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where enter_list_ID = #{enterListId,jdbcType=VARCHAR}
+  </update>
+  <select id="getEnterOrder" resultMap="com.bj186.ssm.mapper.EnterOrderMapper.BaseResultMap">
+    select enter_order_ID,cost_money,cost_money2,status,modified_time2,modified_time from enter_order where enter_order_ID=#{enterOrderID}
+  </select>
+  <select id="getItem" resultMap="com.bj186.ssm.mapper.ItemMapper.BaseResultMap">
+    select itemId,itemName,unit,enterprice,sellprice from itemInfo where itemId=#{GoodsId}
+  </select>
+</mapper>

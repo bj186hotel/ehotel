@@ -13,9 +13,9 @@ layui.config({
  	var addLinksArray = [],addLinks;
  	form.on("submit(addLinks)",function(data){
  		//是否添加过信息
-	 	if(window.sessionStorage.getItem("addLinks")){
+	 	/*if(window.sessionStorage.getItem("addLinks")){
 	 		addLinksArray = JSON.parse(window.sessionStorage.getItem("addLinks"));
-	 	}
+	 	}*/
 	 	//显示、审核状态
  		var homePage = data.field.homePage=="on" ? "首页" : "",
  			subPage = data.field.subPage=="on" ? "子页" : "";
@@ -32,21 +32,23 @@ layui.config({
 
  		addLinks = '{"linksName":"'+ $(".linksName").val() +'",';  //网站名称
  		addLinks += '"linksUrl":"'+ $(".linksUrl").val() +'",';	 //网站地址
- 		addLinks += '"linksDesc":"'+ $(".linksDesc").text() +'",'; //站点描述
+ 		addLinks += '"linksDesc":"'+ $(".linksDesc").val() +'",'; //站点描述
  		addLinks += '"linksTime":"'+ $(".linksTime").val() +'",'; //发布时间
  		addLinks += '"masterEmail":"'+ $(".masterEmail").val() +'",'; //站长邮箱
  		addLinks += '"showAddress":"'+ showAddress +'"}';  //展示位置
  		addLinksArray.unshift(JSON.parse(addLinks));
- 		window.sessionStorage.setItem("addLinks",JSON.stringify(addLinksArray));
+        console.log(JSON.parse(addLinks));
+ 		/*window.sessionStorage.setItem("addLinks",JSON.stringify(addLinksArray));
  		//弹出loading
  		var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
         setTimeout(function(){
             top.layer.close(index);
 			top.layer.msg("文章添加成功！");
+			console.log(addLinksArray);
  			layer.closeAll("iframe");
 	 		//刷新父页面
 	 		parent.location.reload();
-        },2000);
+        },20000);*/
  		return false;
  	})
 	

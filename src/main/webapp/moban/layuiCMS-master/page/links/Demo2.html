@@ -3,44 +3,41 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+    <link rel="stylesheet" href="../../../../houtai/lib/layui/css/layui.css" media="all" />
     <script src="../../mockjs/jquery-3.1.1.min.js"></script>
     <script src="../../mockjs/mock-min.js"></script>
     <script src="../../mockjs/server.js"></script>
-
+    <script type="text/javascript" src="../../../../houtai/lib/layui/layui.js"></script>
 </head>
 <body>
-<div>
-    <h1 id="mockjs">mockjs</h1>
-</div>
-</body>
 
 
-<script type="text/javascript">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+        <legend>总页数低于页码总数</legend>
+    </fieldset>
+    <div id="demo7"></div>
 
 
 
-    //ajax请求
-    $("#mockjs").click(function(){
-        $.ajax({
-            url        : "http://mockjs",    //请求的url地址
-            dataType   : "json",   //返回格式为json
-            async      : true, //请求是否异步，默认为异步，这也是ajax重要特性
-            data       : {},    //参数值
-            type       : "GET",   //请求方式
-            beforeSend : function() {
-                //请求前的处理
-            },
-            success: function(req) {
-                //请求成功时处理
-                console.log(req);
-            },
-            complete: function() {
-                //请求完成的处理
-            },
-            error: function() {
-                //请求出错处理
+
+<script>
+    layui.use(['laypage', 'layer'], function(){
+        var laypage = layui.laypage
+            ,layer = layui.layer;
+        console.log(typeof laypage);
+
+        //完整功能
+        laypage.render({
+            elem: 'demo7'
+            ,count: 100
+            ,layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
+            ,jump: function(obj){
+                console.log(obj)
             }
         });
     });
 </script>
+</body>
+
+
 </html>

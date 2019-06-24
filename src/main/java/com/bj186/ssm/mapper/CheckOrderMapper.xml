@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bj186.ssm.mapper.CheckOrderMapper">
+  <resultMap id="BaseResultMap" type="com.bj186.ssm.pojo.CheckOrder">
+    <id column="check_order_ID" jdbcType="VARCHAR" property="checkOrderId" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <association column="check_ID" property="check" select="getCheck" />
+    <association column="enter_order_ID" property="enterOrder" select="getEnterOrder" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    check_order_ID, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from check_order
+    where check_order_ID = #{checkOrderId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from check_order
+    where check_order_ID = #{checkOrderId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bj186.ssm.pojo.CheckOrder">
+    <selectKey keyProperty="checkOrderId" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into check_order (remark)
+    values (#{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bj186.ssm.pojo.CheckOrder">
+    <selectKey keyProperty="checkOrderId" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into check_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bj186.ssm.pojo.CheckOrder">
+    update check_order
+    <set>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where check_order_ID = #{checkOrderId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bj186.ssm.pojo.CheckOrder">
+    update check_order
+    set remark = #{remark,jdbcType=VARCHAR}
+    where check_order_ID = #{checkOrderId,jdbcType=VARCHAR}
+  </update>
+  <select id="getCheck" resultMap="com.bj186.ssm.mapper.CheckMapper.BaseResultMap">
+    select check_ID,check_time,remark from check where check_ID=#{checkID}
+  </select>
+  <select id="getEnterOrder" resultMap="com.bj186.ssm.mapper.EnterOrderMapper.BaseResultMap">
+    select enter_order_ID,cost_money,cost_money2,status,modified_time2,modified_time from enter_order where enter_order_ID=#{enterOrderID}
+  </select>
+</mapper>

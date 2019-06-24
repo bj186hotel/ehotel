@@ -19,7 +19,7 @@ layui.config({
 		success : function(data){
             linksData2 = data;
 			linksData = data.data;
-            console.log(linksData);
+            //console.log(linksData);
 			if(window.sessionStorage.getItem("addLinks")){
 				var addLinks = window.sessionStorage.getItem("addLinks");
 				linksData = JSON.parse(addLinks).concat(linksData);
@@ -91,9 +91,9 @@ layui.config({
 	//添加订单
 	$(".linksAdd_btn").click(function(){
 		var index = layui.layer.open({
-			title : "添加定单",
+			title : "添加进货定单",
 			type : 2,
-			content : "linksAdd.html",
+			content : "enterAdd.html",
 			success : function(layero, index){
 				setTimeout(function(){
 					layui.layer.tips('点击此处返回友链列表', '.layui-layer-setwin .layui-layer-close', {
@@ -159,63 +159,8 @@ layui.config({
 		form.render('checkbox');
 	})
 
-	//操作
-	$("body").on("click",".links_edit",function(){  //编辑
-        var _this = $(this);
-        console.log(_this.attr("data-id"));
-        var order = linksData[_this.attr("data-id")];
-        layer.open({
-            //layer提供了5种层类型。可传入的值有：0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）
-            type:1,
-            title:"修改订单",
-            area: ['50%','80%'],
-            content:$("#popSearchRoleTest").html(),
-			success:function (layero,index) {
-            	/*给弹出层赋初始值*/
-				var orderId = layero.find("#orderId").val(order.orderId);
-            }
-        });
-        lay('.test-item').each(function(){
-            laydate.render({
-                elem: this
-            });
-        });
-        form.render();
-        setFormValue(linksData2,order);
 
-	})
 
-    //监听弹出框表单提交，massage是修改界面的表单数据'submit(demo11),是修改按钮的绑定
-    function setFormValue(obj ,data){
-        console.log("修改按钮"+data.orderId)
-        form.on('submit(demo11)', function(massage) {
-            $.ajax({
-                url :"http://mockjs",
-                dataType : "json",
-                async      : true, //请求是否异步，默认为异步，这也是ajax重要特性
-                data       : {},    //参数值
-                type       : "GET",   //请求方式
-                success:function (msg) {
-                    var returnCode = msg.code;//取得返回数据（Sting类型的字符串）的信息进行取值判断
-                    if(returnCode==0){
-                        layer.closeAll('loading');
-                        layer.load(2);
-                        layer.msg("修改成功", {icon: 6});
-                        setTimeout(function(){
-                            obj.update({
-                                orderId:massage.field.orderId,
-                            });//修改成功修改表格数据不进行跳转
-                            layer.closeAll();//关闭所有的弹出层
-                        }, 1000);
-                        //加载层-风格
-                    }else{
-                        layer.msg("修改失败", {icon: 5});
-                    }
-                }
-            })
-        })
-
-    }
 
 
     $(function (){//动态添加option
@@ -284,14 +229,9 @@ layui.config({
 			    	+html2
 			    	+'<td>'+currData[i].Deposit+'</td>'
                         +'<td>'+currData[i].price+'</td>'
-                        +'<td>'+currData[i].ordertime+'</td>'
-                        +'<td>'+currData[i].personNum+'</td>'
-                        +'<td>'+currData[i].inTime+'</td>'
-                        +'<td>'+currData[i].outTime+'</td>'
-					+'<td>'+currData[i].remark+'</td>'
 			    	+'<td>'
-					+  '<a class="layui-btn layui-btn-mini links_edit" data-id="'+i+'"><i class="iconfont icon-edit"></i>编辑</a>'
-                        +  '<a class="layui-btn layui-btn-danger layui-btn-mini" data-id="'+i+'" href ="liveAdd.html?'+currData[i].orderId+"&"+i+'"><i class="layui-icon">&#xe61f;</i> 立即入住</a>'
+					+  '<a class="layui-btn layui-btn-mini links_edit" data-id="'+i+'" href ="enterAdd.html?'+currData[i].enter_order_ID+"&"+i+'"><i class="iconfont icon-edit"></i>编辑</a>'
+                        +  '<a class="layui-btn layui-btn-danger layui-btn-mini" data-id="'+i+'" href ="liveAdd.html?'+currData[i].orderId+"&"+i+'"><i class="layui-icon">&#xe61f;</i> 发起审核</a>'
 					+  '<a class="layui-btn layui-btn-danger layui-btn-mini links_del" data-id="'+i+'"><i class="layui-icon">&#xe640;</i> 取消</a>'
 			        +'</td>'
 			    	+'</tr>';

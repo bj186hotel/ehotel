@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bj186.ssm.mapper.LogMapper">
+  <resultMap id="BaseResultMap" type="com.bj186.ssm.pojo.Log">
+    <id column="logsId" jdbcType="INTEGER" property="logsid" />
+    <result column="logsType" jdbcType="VARCHAR" property="logstype" />
+    <result column="logsText" jdbcType="VARCHAR" property="logstext" />
+    <result column="commpp" jdbcType="TIMESTAMP" property="commpp" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <association column="empId" property="staff" select="getStaff" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    logsId, logsType, logsText, commpp, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from logs
+    where logsId = #{logsid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from logs
+    where logsId = #{logsid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bj186.ssm.pojo.Log">
+    <selectKey keyProperty="logsid" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into logs (logsType, logsText, commpp, 
+      remark)
+    values (#{logstype,jdbcType=VARCHAR}, #{logstext,jdbcType=VARCHAR}, #{commpp,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bj186.ssm.pojo.Log">
+    <selectKey keyProperty="logsid" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into logs
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="logstype != null">
+        logsType,
+      </if>
+      <if test="logstext != null">
+        logsText,
+      </if>
+      <if test="commpp != null">
+        commpp,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="logstype != null">
+        #{logstype,jdbcType=VARCHAR},
+      </if>
+      <if test="logstext != null">
+        #{logstext,jdbcType=VARCHAR},
+      </if>
+      <if test="commpp != null">
+        #{commpp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bj186.ssm.pojo.Log">
+    update logs
+    <set>
+      <if test="logstype != null">
+        logsType = #{logstype,jdbcType=VARCHAR},
+      </if>
+      <if test="logstext != null">
+        logsText = #{logstext,jdbcType=VARCHAR},
+      </if>
+      <if test="commpp != null">
+        commpp = #{commpp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where logsId = #{logsid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bj186.ssm.pojo.Log">
+    update logs
+    set logsType = #{logstype,jdbcType=VARCHAR},
+      logsText = #{logstext,jdbcType=VARCHAR},
+      commpp = #{commpp,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where logsId = #{logsid,jdbcType=INTEGER}
+  </update>
+  <select id="getStaff" resultMap="com.bj186.ssm.mapper.StaffMapper.BaseResultMap">
+    select empId,empName,empSex,empAge,empPhone,empWage,empEmail,empPay,empLastTime,remark from emp where empId=#{empId}
+  </select>
+</mapper>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bj186.ssm.mapper.StaffMapper">
+  <resultMap id="BaseResultMap" type="com.bj186.ssm.pojo.Staff">
+    <id column="empId" jdbcType="INTEGER" property="empid" />
+    <result column="empName" jdbcType="VARCHAR" property="empname" />
+    <result column="empSex" jdbcType="VARCHAR" property="empsex" />
+    <result column="empAge" jdbcType="INTEGER" property="empage" />
+    <result column="empPhone" jdbcType="VARCHAR" property="empphone" />
+    <result column="empWage" jdbcType="INTEGER" property="empwage" />
+    <result column="empEmail" jdbcType="VARCHAR" property="empemail" />
+    <result column="empPay" jdbcType="VARCHAR" property="emppay" />
+    <result column="empLastTime" jdbcType="TIMESTAMP" property="emplasttime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <association column="depId" property="department" select="getDepartment" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    empId, empName, empSex, empAge, empPhone, empWage, empEmail, empPay, empLastTime, 
+    remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from emp
+    where empId = #{empid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from emp
+    where empId = #{empid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bj186.ssm.pojo.Staff">
+    <selectKey keyProperty="empid" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into emp (empName, empSex, empAge, 
+      empPhone, empWage, empEmail, 
+      empPay, empLastTime, remark
+      )
+    values (#{empname,jdbcType=VARCHAR}, #{empsex,jdbcType=VARCHAR}, #{empage,jdbcType=INTEGER}, 
+      #{empphone,jdbcType=VARCHAR}, #{empwage,jdbcType=INTEGER}, #{empemail,jdbcType=VARCHAR}, 
+      #{emppay,jdbcType=VARCHAR}, #{emplasttime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bj186.ssm.pojo.Staff">
+    <selectKey keyProperty="empid" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into emp
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="empname != null">
+        empName,
+      </if>
+      <if test="empsex != null">
+        empSex,
+      </if>
+      <if test="empage != null">
+        empAge,
+      </if>
+      <if test="empphone != null">
+        empPhone,
+      </if>
+      <if test="empwage != null">
+        empWage,
+      </if>
+      <if test="empemail != null">
+        empEmail,
+      </if>
+      <if test="emppay != null">
+        empPay,
+      </if>
+      <if test="emplasttime != null">
+        empLastTime,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="empname != null">
+        #{empname,jdbcType=VARCHAR},
+      </if>
+      <if test="empsex != null">
+        #{empsex,jdbcType=VARCHAR},
+      </if>
+      <if test="empage != null">
+        #{empage,jdbcType=INTEGER},
+      </if>
+      <if test="empphone != null">
+        #{empphone,jdbcType=VARCHAR},
+      </if>
+      <if test="empwage != null">
+        #{empwage,jdbcType=INTEGER},
+      </if>
+      <if test="empemail != null">
+        #{empemail,jdbcType=VARCHAR},
+      </if>
+      <if test="emppay != null">
+        #{emppay,jdbcType=VARCHAR},
+      </if>
+      <if test="emplasttime != null">
+        #{emplasttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bj186.ssm.pojo.Staff">
+    update emp
+    <set>
+      <if test="empname != null">
+        empName = #{empname,jdbcType=VARCHAR},
+      </if>
+      <if test="empsex != null">
+        empSex = #{empsex,jdbcType=VARCHAR},
+      </if>
+      <if test="empage != null">
+        empAge = #{empage,jdbcType=INTEGER},
+      </if>
+      <if test="empphone != null">
+        empPhone = #{empphone,jdbcType=VARCHAR},
+      </if>
+      <if test="empwage != null">
+        empWage = #{empwage,jdbcType=INTEGER},
+      </if>
+      <if test="empemail != null">
+        empEmail = #{empemail,jdbcType=VARCHAR},
+      </if>
+      <if test="emppay != null">
+        empPay = #{emppay,jdbcType=VARCHAR},
+      </if>
+      <if test="emplasttime != null">
+        empLastTime = #{emplasttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where empId = #{empid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bj186.ssm.pojo.Staff">
+    update emp
+    set empName = #{empname,jdbcType=VARCHAR},
+      empSex = #{empsex,jdbcType=VARCHAR},
+      empAge = #{empage,jdbcType=INTEGER},
+      empPhone = #{empphone,jdbcType=VARCHAR},
+      empWage = #{empwage,jdbcType=INTEGER},
+      empEmail = #{empemail,jdbcType=VARCHAR},
+      empPay = #{emppay,jdbcType=VARCHAR},
+      empLastTime = #{emplasttime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where empId = #{empid,jdbcType=INTEGER}
+  </update>
+  <select id="getDepartment" resultMap="com.bj186.ssm.mapper.DepartmentMapper.BaseResultMap">
+    select depId,depName,depInfor,remark from dep where depId=#{depId}
+  </select>
+</mapper>

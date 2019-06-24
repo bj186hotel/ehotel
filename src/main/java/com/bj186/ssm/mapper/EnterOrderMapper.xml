@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bj186.ssm.mapper.EnterOrderMapper">
+  <resultMap id="BaseResultMap" type="com.bj186.ssm.pojo.EnterOrder">
+    <id column="enter_order_ID" jdbcType="INTEGER" property="enterOrderId" />
+    <result column="cost_money" jdbcType="DOUBLE" property="costMoney" />
+    <result column="cost_money2" jdbcType="DOUBLE" property="costMoney2" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="modified_time2" jdbcType="TIMESTAMP" property="modifiedTime2" />
+    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+    <collection column="enter_order_ID" property="enterOrderLists" select="getEnterOrderLists" />
+    <association column="usersId" property="user" select="getUser" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    enter_order_ID, cost_money, cost_money2, status, modified_time2, modified_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from enter_order
+    where enter_order_ID = #{enterOrderId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from enter_order
+    where enter_order_ID = #{enterOrderId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bj186.ssm.pojo.EnterOrder">
+    <selectKey keyProperty="enterOrderId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into enter_order (cost_money, cost_money2, status, 
+      modified_time2, modified_time)
+    values (#{costMoney,jdbcType=DOUBLE}, #{costMoney2,jdbcType=DOUBLE}, #{status,jdbcType=INTEGER}, 
+      #{modifiedTime2,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bj186.ssm.pojo.EnterOrder">
+    <selectKey keyProperty="enterOrderId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into enter_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="costMoney != null">
+        cost_money,
+      </if>
+      <if test="costMoney2 != null">
+        cost_money2,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="modifiedTime2 != null">
+        modified_time2,
+      </if>
+      <if test="modifiedTime != null">
+        modified_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="costMoney != null">
+        #{costMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="costMoney2 != null">
+        #{costMoney2,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="modifiedTime2 != null">
+        #{modifiedTime2,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null">
+        #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bj186.ssm.pojo.EnterOrder">
+    update enter_order
+    <set>
+      <if test="costMoney != null">
+        cost_money = #{costMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="costMoney2 != null">
+        cost_money2 = #{costMoney2,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="modifiedTime2 != null">
+        modified_time2 = #{modifiedTime2,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null">
+        modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where enter_order_ID = #{enterOrderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bj186.ssm.pojo.EnterOrder">
+    update enter_order
+    set cost_money = #{costMoney,jdbcType=DOUBLE},
+      cost_money2 = #{costMoney2,jdbcType=DOUBLE},
+      status = #{status,jdbcType=INTEGER},
+      modified_time2 = #{modifiedTime2,jdbcType=TIMESTAMP},
+      modified_time = #{modifiedTime,jdbcType=TIMESTAMP}
+    where enter_order_ID = #{enterOrderId,jdbcType=INTEGER}
+  </update>
+  <select id="getEnterOrderLists" resultMap="com.bj186.ssm.mapper.EnterOrderListMapper.BaseResultMap">
+    select enter_list_ID,pron_number1,pron_number2,modified_time,remark from enter_order_list where depId=#{enterOrderID} 
+  </select>
+  <select id="getUser" resultMap="com.bj186.ssm.mapper.UserMapper.BaseResultMap">
+    select userid,password,remark from users where userId=#{usersId}
+  </select>
+</mapper>

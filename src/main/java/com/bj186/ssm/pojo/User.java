@@ -1,42 +1,43 @@
 package com.bj186.ssm.pojo;
 
 public class User {
-    private Integer customerId;
+    private Integer userid;
 
-    private String customerName;
+    private String password;
 
-    private String customerPwd;
+    private String remark;
 
-    public Integer getCustomerId() {
-        return customerId;
+    private Staff staff;
+
+    public Integer getUserid() {
+        return userid;
     }
 
-    public void setCustomerId(Integer customerId) {
-        this.customerId = customerId;
+    public void setUserid(Integer userid) {
+        this.userid = userid;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public String getPassword() {
+        return password;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName == null ? null : customerName.trim();
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
     }
 
-    public String getCustomerPwd() {
-        return customerPwd;
+    public String getRemark() {
+        return remark;
     }
 
-    public void setCustomerPwd(String customerPwd) {
-        this.customerPwd = customerPwd == null ? null : customerPwd.trim();
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "customerId=" + customerId +
-                ", customerName='" + customerName + '\'' +
-                ", customerPwd='" + customerPwd + '\'' +
-                '}';
+    public Staff getStaff() {
+        return staff;
+    }
+
+    public void setStaff(Staff staff) {
+        this.staff=staff;
     }
 }

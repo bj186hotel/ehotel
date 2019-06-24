@@ -1,7 +1,7 @@
 ﻿//调用mock方法模拟数据
 Mock.mock(
     'http://mockjs', {
-        "data|1-10": [
+        "data|20-50": [
 
                  {
                     "orderId":  /\d{5,10}/,

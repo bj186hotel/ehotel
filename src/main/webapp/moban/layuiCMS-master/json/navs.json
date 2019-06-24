@@ -1,22 +1,22 @@
 [{
-	"title" : "后台首页2",
+	"title" : "客房订单首页",
 	"icon" : "icon-computer",
-	"href" : "page/main.html",
+	"href" : "page/links/ordersList.html",
 	"spread" : false
 },{
-	"title" : "文章列表",
+	"title" : "入库首页",
 	"icon" : "icon-text",
-	"href" : "page/news/newsList.html",
+	"href" : "page/links/proinList.html",
 	"spread" : false
 },{
-	"title" : "友情链接",
+	"title" : "进货订单首页",
 	"icon" : "&#xe64c;",
-	"href" : "page/links/linksList.html",
+	"href" : "page/links/enterList.html",
 	"spread" : false
 },{
-	"title" : "系统基本参数",
+	"title" : "进货订单审核",
 	"icon" : "&#xe631;",
-	"href" : "page/systemParameter/systemParameter.html",
+	"href" : "page/links/enterList2.html",
 	"spread" : false
 },{
 	"title" : "其他页面",

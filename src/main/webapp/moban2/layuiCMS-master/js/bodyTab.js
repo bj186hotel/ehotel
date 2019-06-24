@@ -22,6 +22,7 @@ layui.define(["element","jquery"],function(exports){
 	Tab.prototype.render = function() {
 		var url = this.tabConfig.url;
 		console.log(url);
+		console.log(data);
 		$.get(url,function(data){
 			console.log(data);
 			//显示左侧菜单

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bj186.ssm.mapper.RoomTypeMapper">
+  <resultMap id="BaseResultMap" type="com.bj186.ssm.pojo.RoomType">
+    <id column="rtypeId" jdbcType="INTEGER" property="rtypeid" />
+    <result column="rtypeName" jdbcType="VARCHAR" property="rtypename" />
+    <result column="resMon" jdbcType="INTEGER" property="resmon" />
+    <result column="liveNum" jdbcType="INTEGER" property="livenum" />
+    <result column="depMoney" jdbcType="VARCHAR" property="depmoney" />
+    <result column="facility" jdbcType="VARCHAR" property="facility" />
+    <result column="isfood" jdbcType="INTEGER" property="isfood" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <collection column="rtypeId" property="rooms" select="getRooms" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    rtypeId, rtypeName, resMon, liveNum, depMoney, facility, isfood, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rtype
+    where rtypeId = #{rtypeid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from rtype
+    where rtypeId = #{rtypeid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bj186.ssm.pojo.RoomType">
+    <selectKey keyProperty="rtypeid" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into rtype (rtypeName, resMon, liveNum, 
+      depMoney, facility, isfood, 
+      remark)
+    values (#{rtypename,jdbcType=VARCHAR}, #{resmon,jdbcType=INTEGER}, #{livenum,jdbcType=INTEGER}, 
+      #{depmoney,jdbcType=VARCHAR}, #{facility,jdbcType=VARCHAR}, #{isfood,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bj186.ssm.pojo.RoomType">
+    <selectKey keyProperty="rtypeid" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into rtype
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rtypename != null">
+        rtypeName,
+      </if>
+      <if test="resmon != null">
+        resMon,
+      </if>
+      <if test="livenum != null">
+        liveNum,
+      </if>
+      <if test="depmoney != null">
+        depMoney,
+      </if>
+      <if test="facility != null">
+        facility,
+      </if>
+      <if test="isfood != null">
+        isfood,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rtypename != null">
+        #{rtypename,jdbcType=VARCHAR},
+      </if>
+      <if test="resmon != null">
+        #{resmon,jdbcType=INTEGER},
+      </if>
+      <if test="livenum != null">
+        #{livenum,jdbcType=INTEGER},
+      </if>
+      <if test="depmoney != null">
+        #{depmoney,jdbcType=VARCHAR},
+      </if>
+      <if test="facility != null">
+        #{facility,jdbcType=VARCHAR},
+      </if>
+      <if test="isfood != null">
+        #{isfood,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bj186.ssm.pojo.RoomType">
+    update rtype
+    <set>
+      <if test="rtypename != null">
+        rtypeName = #{rtypename,jdbcType=VARCHAR},
+      </if>
+      <if test="resmon != null">
+        resMon = #{resmon,jdbcType=INTEGER},
+      </if>
+      <if test="livenum != null">
+        liveNum = #{livenum,jdbcType=INTEGER},
+      </if>
+      <if test="depmoney != null">
+        depMoney = #{depmoney,jdbcType=VARCHAR},
+      </if>
+      <if test="facility != null">
+        facility = #{facility,jdbcType=VARCHAR},
+      </if>
+      <if test="isfood != null">
+        isfood = #{isfood,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where rtypeId = #{rtypeid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bj186.ssm.pojo.RoomType">
+    update rtype
+    set rtypeName = #{rtypename,jdbcType=VARCHAR},
+      resMon = #{resmon,jdbcType=INTEGER},
+      liveNum = #{livenum,jdbcType=INTEGER},
+      depMoney = #{depmoney,jdbcType=VARCHAR},
+      facility = #{facility,jdbcType=VARCHAR},
+      isfood = #{isfood,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where rtypeId = #{rtypeid,jdbcType=INTEGER}
+  </update>
+  <select id="getRooms" resultMap="com.bj186.ssm.mapper.RoomMapper.BaseResultMap">
+    select roomId,roomNum,newPrice,promotion,defImg,state,remark from room where rtypeId=#{rtypeId} 
+  </select>
+</mapper>

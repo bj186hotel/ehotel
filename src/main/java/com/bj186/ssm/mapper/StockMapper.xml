@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bj186.ssm.mapper.StockMapper">
+  <resultMap id="BaseResultMap" type="com.bj186.ssm.pojo.Stock">
+    <id column="stock_Id" jdbcType="VARCHAR" property="stockId" />
+    <result column="count" jdbcType="INTEGER" property="count" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <association column="Goods_Id" property="item" select="getItem" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    stock_Id, count, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from stock
+    where stock_Id = #{stockId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from stock
+    where stock_Id = #{stockId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bj186.ssm.pojo.Stock">
+    <selectKey keyProperty="stockId" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into stock (count, remark)
+    values (#{count,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bj186.ssm.pojo.Stock">
+    <selectKey keyProperty="stockId" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into stock
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="count != null">
+        count,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="count != null">
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bj186.ssm.pojo.Stock">
+    update stock
+    <set>
+      <if test="count != null">
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where stock_Id = #{stockId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bj186.ssm.pojo.Stock">
+    update stock
+    set count = #{count,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where stock_Id = #{stockId,jdbcType=VARCHAR}
+  </update>
+  <select id="getItem" resultMap="com.bj186.ssm.mapper.ItemMapper.BaseResultMap">
+    select itemId,itemName,unit,enterprice,sellprice from itemInfo where itemId=#{GoodsId}
+  </select>
+</mapper>
