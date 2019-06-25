@@ -14,6 +14,18 @@
     <collection column="roomId" property="orders" select="getOrders" />
     <collection column="commId" property="comments" select="getComments" />
   </resultMap>
+  <resultMap id="BaseResultMap2" type="com.bj186.ssm.pojo.Room">
+    <id column="roomId" jdbcType="INTEGER" property="roomid" />
+    <result column="roomNum" jdbcType="VARCHAR" property="roomnum" />
+    <result column="newPrice" jdbcType="DOUBLE" property="newprice" />
+    <result column="promotion" jdbcType="INTEGER" property="promotion" />
+    <result column="defImg" jdbcType="VARCHAR" property="defimg" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <association column="rtypeId" property="roomType" select="getRoomType" />
+    <collection column="roomId" property="roomImgs" select="getRoomImgs" />
+    <collection column="commId" property="comments" select="getComments" />
+  </resultMap>
   <sql id="Base_Column_List">
     roomId, roomNum, newPrice, promotion, defImg, state, remark
   </sql>
@@ -127,7 +139,7 @@
   <select id="getComments" resultMap="com.bj186.ssm.mapper.CommentMapper.BaseResultMap">
     select commId,commText,remark from comm where commId=#{commId} 
   </select>
-  <select id="getRoomType" resultMap="com.bj186.ssm.mapper.RoomTypeMapper.BaseResultMap">
+  <select id="getRoomType" resultMap="com.bj186.ssm.mapper.RoomTypeMapper.BaseResultMap2">
     select rtypeId,rtypeName,resMon,liveNum,depMoney,facility,isfood,remark from rtype where rtypeId=#{rtypeId}
   </select>
 </mapper>

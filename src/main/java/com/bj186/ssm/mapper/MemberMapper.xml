@@ -17,6 +17,21 @@
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <collection column="memId" property="orders" select="getOrders" />
   </resultMap>
+  <resultMap id="BaseResultMap2" type="com.bj186.ssm.pojo.Member">
+    <id column="memId" jdbcType="INTEGER" property="memid" />
+    <result column="menNum" jdbcType="VARCHAR" property="mennum" />
+    <result column="memName" jdbcType="VARCHAR" property="memname" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="memPaw" jdbcType="VARCHAR" property="mempaw" />
+    <result column="memsex" jdbcType="VARCHAR" property="memsex" />
+    <result column="IDCard" jdbcType="VARCHAR" property="idcard" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="memInt" jdbcType="INTEGER" property="memint" />
+    <result column="discount" jdbcType="DOUBLE" property="discount" />
+    <result column="regisdate" jdbcType="TIMESTAMP" property="regisdate" />
+    <result column="userstate" jdbcType="VARCHAR" property="userstate" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
   <sql id="Base_Column_List">
     memId, menNum, memName, phone, memPaw, memsex, IDCard, email, memInt, discount, regisdate, 
     userstate, remark

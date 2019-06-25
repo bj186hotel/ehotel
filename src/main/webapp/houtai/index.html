@@ -51,12 +51,15 @@
 <script>
     $('.btnLogin').on("click",function () {
         $.ajax({
-            url:'/login',
-            type:'get',
-            data:{'method':'login','login_name':$("#username").val(),'password':$("#password").val()},
+            url:'/order/getAllOrder',
+            type:'post',
+            data:{},
             dataType:'json',
             success:function (backData) {
-                console.log('成功了'+backData)
+                console.log('成功了'+JSON.stringify(backData));
+                var a = JSON.stringify(backData);
+                console.log('成功了'+backData.msg);
+                console.log('成功了'+a.data);
 
                 if(backData.code == 0){
 

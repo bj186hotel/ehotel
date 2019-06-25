@@ -11,7 +11,7 @@ layui.config({
 	var linksData = '';
     var linksData2 = '';
 	$.ajax({
-		url :"http://mockjs",
+		url :"",
 		dataType : "json",
         async      : true, //请求是否异步，默认为异步，这也是ajax重要特性
         data       : {},    //参数值

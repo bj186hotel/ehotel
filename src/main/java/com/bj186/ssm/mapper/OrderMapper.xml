@@ -173,10 +173,10 @@
       remark = #{remark,jdbcType=VARCHAR}
     where orderId = #{orderid,jdbcType=INTEGER}
   </update>
-  <select id="getRoom" resultMap="com.bj186.ssm.mapper.RoomMapper.BaseResultMap">
-    select roomId,roomNum,newPrice,promotion,defImg,state,remark from room where roomId=#{roomId}
+  <select id="getRoom" resultMap="com.bj186.ssm.mapper.RoomMapper.BaseResultMap2">
+    select * from room r left join rtype t on r.rtypeId = t.rtypeId where r.roomId=#{roomId}
   </select>
-  <select id="getMember" resultMap="com.bj186.ssm.mapper.MemberMapper.BaseResultMap">
+  <select id="getMember" resultMap="com.bj186.ssm.mapper.MemberMapper.BaseResultMap2">
     select memId,menNum,memName,phone,memPaw,memsex,IDCard,email,memInt,discount,regisdate,userstate,remark from member where memId=#{memId}
   </select>
   <select id="getUser" resultMap="com.bj186.ssm.mapper.UserMapper.BaseResultMap">

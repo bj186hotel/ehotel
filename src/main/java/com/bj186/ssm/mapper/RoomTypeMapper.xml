@@ -12,6 +12,16 @@
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <collection column="rtypeId" property="rooms" select="getRooms" />
   </resultMap>
+  <resultMap id="BaseResultMap2" type="com.bj186.ssm.pojo.RoomType">
+    <id column="rtypeId" jdbcType="INTEGER" property="rtypeid" />
+    <result column="rtypeName" jdbcType="VARCHAR" property="rtypename" />
+    <result column="resMon" jdbcType="DOUBLE" property="resmon" />
+    <result column="liveNum" jdbcType="INTEGER" property="livenum" />
+    <result column="depMoney" jdbcType="DOUBLE" property="depmoney" />
+    <result column="facility" jdbcType="VARCHAR" property="facility" />
+    <result column="isfood" jdbcType="INTEGER" property="isfood" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
   <sql id="Base_Column_List">
     rtypeId, rtypeName, resMon, liveNum, depMoney, facility, isfood, remark
   </sql>
