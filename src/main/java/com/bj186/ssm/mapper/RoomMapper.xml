@@ -122,7 +122,7 @@
     select rimgId,status,imgUrl,remark from rimg where roomId=#{roomId} 
   </select>
   <select id="getOrders" resultMap="com.bj186.ssm.mapper.OrderMapper.BaseResultMap">
-    select orderId,orderstate,oldprice,newprice,otherprice,ordertime,personNum,inTime,outTime,remark from order where roomId=#{roomId} 
+    select orderId,orderstate,oldprice,newprice,otherprice,ordertime,personNum,inTime,outTime,remark from orders where roomId=#{roomId} 
   </select>
   <select id="getComments" resultMap="com.bj186.ssm.mapper.CommentMapper.BaseResultMap">
     select commId,commText,remark from comm where commId=#{commId} 

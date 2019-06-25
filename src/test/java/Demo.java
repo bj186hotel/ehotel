@@ -1,5 +1,7 @@
 
+import com.bj186.ssm.mapper.OrderMapper;
 import com.bj186.ssm.mapper.UserMapper;
+import com.bj186.ssm.pojo.Order;
 import com.bj186.ssm.pojo.User;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -7,6 +9,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author 郑金城
@@ -26,11 +32,14 @@ public class Demo {
     public void test1(){
         SqlSessionFactory sqlSessionFactory = context.getBean("sqlSessionFactory", SqlSessionFactory.class);
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
-        User user = new User();
-        user.setCustomerName("郑金城");
-        user.setCustomerPwd("12345");
-        int insert = mapper.insert(user);
-        System.out.println(user);
+        OrderMapper mapper = sqlSession.getMapper(OrderMapper.class);
+        Order order = new Order();
+        Map<String,Object> map = new HashMap<>();
+        //map.put("menNum","18482117000");
+        map.put("roomNum","1-101");
+        List<Order> orders1 = mapper.selectAllByCondition(map);
+        System.out.println(orders1.get(0));
+        //List<Order> orders = mapper.selectAll();
+        //System.out.println(orders.get(0));
     }
 }

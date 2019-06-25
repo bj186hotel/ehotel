@@ -31,6 +31,6 @@
     select cusId,IDcard,cusName,remark from customer where cusId=#{cusId}
   </select>
   <select id="getOrder" resultMap="com.bj186.ssm.mapper.OrderMapper.BaseResultMap">
-    select orderId,orderstate,oldprice,newprice,otherprice,ordertime,personNum,inTime,outTime,remark from order where orderId=#{orderId}
+    select orderId,orderstate,oldprice,newprice,otherprice,ordertime,personNum,inTime,outTime,remark from orders where orderId=#{orderId}
   </select>
 </mapper>

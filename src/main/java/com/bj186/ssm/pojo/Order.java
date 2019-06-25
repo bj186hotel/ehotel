@@ -132,4 +132,23 @@ public class Order {
     public void setUser(User user) {
         this.user=user;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderid=" + orderid +
+                ", orderstate='" + orderstate + '\'' +
+                ", oldprice=" + oldprice +
+                ", newprice=" + newprice +
+                ", otherprice=" + otherprice +
+                ", ordertime=" + ordertime +
+                ", personnum=" + personnum +
+                ", intime=" + intime +
+                ", outtime=" + outtime +
+                ", remark='" + remark + '\'' +
+                ", room=" + room +
+                ", member=" + member +
+                ", user=" + user +
+                '}';
+    }
 }

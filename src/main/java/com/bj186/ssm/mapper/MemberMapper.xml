@@ -187,6 +187,6 @@
     where memId = #{memid,jdbcType=INTEGER}
   </update>
   <select id="getOrders" resultMap="com.bj186.ssm.mapper.OrderMapper.BaseResultMap">
-    select orderId,orderstate,oldprice,newprice,otherprice,ordertime,personNum,inTime,outTime,remark from order where memId=#{memId} 
+    select orderId,orderstate,oldprice,newprice,otherprice,ordertime,personNum,inTime,outTime,remark from orders where memId=#{memId} 
   </select>
 </mapper>

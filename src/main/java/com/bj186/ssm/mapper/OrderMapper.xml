@@ -21,20 +21,40 @@
     outTime, remark
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
-    from order
+    from orders
     where orderId = #{orderid,jdbcType=INTEGER}
   </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * from orders o left join room r on o.roomId = r.roomId left join member m on o.memId = m.memId left join users u on o.usersId = u.userid
+  </select>
+  <select id="selectAllByCondition" parameterType="map" resultMap="BaseResultMap">
+    select * from orders o left join room r on o.roomId = r.roomId left join member m on o.memId = m.memId left join users u on o.usersId = u.userid
+    <where>
+      <if test="menNum != null">
+        m.menNum = #{menNum}
+      </if>
+      <if test="ordertime != null and ordertime != ''">
+        AND o.ordertime = #{ordertime}
+      </if>
+      <if test="roomNum != null">
+        AND r.roomNum = #{roomNum}
+      </if>
+      <if test="orderstate != null">
+        AND o.orderstate = #{orderstate}
+      </if>
+    </where>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from order
+    delete from orders
     where orderId = #{orderid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.bj186.ssm.pojo.Order">
     <selectKey keyProperty="orderid" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into order (orderstate, oldprice, newprice, 
+    insert into orders (orderstate, oldprice, newprice, 
       otherprice, ordertime, personNum, 
       inTime, outTime, remark
       )
@@ -47,7 +67,7 @@
     <selectKey keyProperty="orderid" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into order
+    insert into orders
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="orderstate != null">
         orderstate,
@@ -108,7 +128,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.bj186.ssm.pojo.Order">
-    update order
+    update orders
     <set>
       <if test="orderstate != null">
         orderstate = #{orderstate,jdbcType=VARCHAR},
@@ -141,7 +161,7 @@
     where orderId = #{orderid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.bj186.ssm.pojo.Order">
-    update order
+    update orders
     set orderstate = #{orderstate,jdbcType=VARCHAR},
       oldprice = #{oldprice,jdbcType=DOUBLE},
       newprice = #{newprice,jdbcType=DOUBLE},
@@ -160,6 +180,6 @@
     select memId,menNum,memName,phone,memPaw,memsex,IDCard,email,memInt,discount,regisdate,userstate,remark from member where memId=#{memId}
   </select>
   <select id="getUser" resultMap="com.bj186.ssm.mapper.UserMapper.BaseResultMap">
-    select userid,password,remark from users where usersId=#{usersId}
+    select userid,password,remark from users where userId=#{usersId}
   </select>
 </mapper>
