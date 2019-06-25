@@ -34,7 +34,7 @@ public interface OrderService {
     List<Order> selectAll();
 
     /**
-     * 根据订单条件查询
+     * 根据订单条件查询（用户名、房间号、状态、下单时间）
      * @param map
      * @return
      */
