@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>文章列表--layui后台管理模板</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<script src="../../layui/laydate/laydate.js"></script>
+	<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+	<link rel="stylesheet" href="../../layui/laydate/theme/default/laydate.css">
+	<link rel="stylesheet" href="//at.alicdn.com/t/font_tnyc012u2rlwstt9.css" media="all" />
+	<link rel="stylesheet" href="../../css/news.css" media="all" />
+	<script src="../../mockjs/mock-min.js"></script>
+	<script src="../../mockjs/server.js"></script>
+	<script src="../../mockjs/server2.js"></script>
+
+</head>
+<body class="childrenBody">
+	<blockquote class="layui-elem-quote news_search">
+		<div class="layui-inline">
+		    <div class="layui-input-inline">
+		    	<input type="text" value="" placeholder="请输入关键字" class="layui-input search_input">
+		    </div>
+		    <a class="layui-btn search_btn">查询</a>
+		</div>
+		<div class="layui-inline">
+			<a class="layui-btn linksAdd_btn" style="background-color:#5FB878">添加部门</a>
+		</div>
+		<div class="layui-inline">
+			<a class="layui-btn layui-btn-danger batchDel">批量删除</a>
+		</div>
+
+	</blockquote>
+
+	<div class="layui-form-item">
+		<label class="layui-form-label">暂定：</label>
+		<div class="layui-input-inline">
+			<input type="text" class="layui-input" id="inTime" placeholder="入住日期">
+			<script>
+                //执行一个laydate实例
+                laydate.render({
+                    elem: '#inTime' //指定元素
+                });
+			</script>
+		</div>
+		<label class="layui-form-label">暂定：</label>
+		<div class="layui-input-inline">
+			<input type="text" class="layui-input" id="outTime" placeholder="离店日期">
+			<script>
+                //执行一个laydate实例
+                laydate.render({
+                    elem: '#outTime' //指定元素
+                });
+			</script>
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label">部门名称：</label>
+		<div class="layui-input-inline">
+			<input type="text" name="orderId" id="memId2" placeholder="员工ID" class="layui-input">
+		</div>
+		<label class="layui-form-label">暂定状态：</label>
+		<div class="layui-input-inline">
+			<select class="layui-input" name="publish_status" lay-filter="eqptType" id="orderstate">
+				<option value="">请选择暂定状态</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="layui-form-item">
+		<label class="layui-form-label">部门Id：</label>
+		<div class="layui-input-inline">
+			<input type="text" class="layui-input" id="ordertime" placeholder="部门Id">
+			<script>
+                //执行一个laydate实例
+                laydate.render({
+                    elem: '#ordertime' //指定元素
+                });
+			</script>
+		</div>
+	</div>
+	<div class="layui-form links_list">
+	  	<table class="layui-table">
+		    <colgroup>
+				<col width="50">
+				<col>
+				<col>
+				<col>
+				<col>
+				<col>
+				<col>
+				<col>
+		    </colgroup>
+		    <thead>
+				<tr>
+					<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
+					<th style="text-align:left;">部门ID</th>
+					<th>部门名称</th>
+					<th>部门信息</th>
+					<th>备注</th>
+					<th>操作</th>
+				</tr> 
+		    </thead>
+		    <tbody class="links_content"></tbody>
+		</table>
+	</div>
+	<div id="page"></div>
+	<script type="text/javascript" src="../../layui/layui.js"></script>
+	<script type="text/javascript" src="depList.js"></script>
+
+
+	<!-- 选择编辑的按钮 -->
+	<div class="layui-row" id="popSearchRoleTest" style="display:none;">
+		<div class="layui-col-md11">
+			<form class="layui-form" >
+				<br>
+				<div class="layui-form-item">
+					<label class="layui-form-label">部门Id：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="depId" id="depId"  class="layui-input">
+					</div>
+					<label class="layui-form-label">部门名称：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="depName" id="depName" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">部门信息</label>
+					<div class="layui-input-block">
+						<input type="text" name="depInfor" class="layui-input" id="depInfor">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">备注：</label>
+					<div class="layui-input-block">
+						<textarea placeholder="请输入内容" class="layui-textarea" name="remark" idremark></textarea>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<button class="layui-btn  layui-btn-submit " lay-submit="" lay-filter="demo11">确认修改</button>
+					</div>
+				</div>
+
+
+			</form>
+		</div>
+	</div>
+
+</body>
+</html>
