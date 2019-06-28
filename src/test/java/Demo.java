@@ -1,8 +1,6 @@
 
 import com.bj186.ssm.mapper.OrderMapper;
-import com.bj186.ssm.mapper.UserMapper;
 import com.bj186.ssm.pojo.Order;
-import com.bj186.ssm.pojo.User;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Before;
@@ -34,7 +32,7 @@ public class Demo {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         OrderMapper mapper = sqlSession.getMapper(OrderMapper.class);
         Order order = new Order();
-        Map<String,Object> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>();
         //map.put("menNum","18482117000");
         map.put("roomNum","1-101");
         List<Order> orders1 = mapper.selectAllByCondition(map);
