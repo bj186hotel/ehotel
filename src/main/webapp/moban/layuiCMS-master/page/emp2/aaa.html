@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Title</title>
+    <!-- @Description: -->
+    <!-- @author lxy -->
+    <!-- @date 2019/6/20$  -->
+    <style type="text/css">
+        #newA{
+            display: none;
+        }
+    </style>
+
+</head>
+<body>
+<input type="text" style="width: 200px;height: 50px;border: 1px saddlebrown solid" id="newA">
+<button id="jia">点击添加</button>
+
+<select class="form-control" id="edit_material_id" name="material_id">
+    <option value=""></option>
+    <!--<?php foreach($stock_info as $row):?>-->
+    <option value="<?php echo $row['id'];?>">   </option>
+    <!--<?php endforeach;-->
+</select>
+
+<script type="text/javascript" src="jQuery%20v3.3.1.min.js"></script>
+<script type="text/javascript">
+    $('#jia').on('click',function () {
+        $('#newA').toggle();
+        let s = 'hahah';
+        $('#newA').val(s);
+        // console.log('a');
+    });
+    $('.edit-modal').on('click',function(){
+        var id = $(this).attr('href');
+        var value = $(this).attr('value');
+        // get data
+        var url="<?php echo $root;?>/editRobotActionNum";
+        $.ajax({
+            url: url,
+            data: 'id='+value,
+            type : 'POST',
+            dataType : 'json',
+            success : function(json)
+            {
+                $('#editId').attr('value',json.id);
+                $('select#edit_material_id').val(json.material_id);
+                $('select#edit_station_id').val(json.station_id);
+                $('#edit_up_action').attr('value',json.up_action);
+                $('#edit_turn_action').attr('value',json.turn_action);
+                $('#edit_down_action').attr('value',json.down_action);
+
+            }
+        });
+
+        $(id).modal('show');
+    });
+
+</script>
+</body>
+</html>

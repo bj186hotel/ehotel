@@ -14,33 +14,53 @@
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <association column="depId" property="department" select="getDepartment" />
   </resultMap>
+
   <sql id="Base_Column_List">
     empId, empName, empSex, empAge, empPhone, empWage, empEmail, empPay, empLastTime, 
     remark
   </sql>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from emp
-    where empId = #{empid,jdbcType=INTEGER}
+    select
+    e.empId,e.empName,e.empSex,e.empAge,e.empPhone,e.empWage,e.empEmail,e.empPay,e.remark,d.depName
+    from emp e
+    left JOIN
+    dep d
+    on e.depId = d.depId
+    where
+    <if test="empid != null">
+      empId = #{empid,jdbcType=INTEGER}
+    </if>
+    <if test="department.depid != null">
+      depId = #{department.depid,jdbcType=INTEGER}
+    </if>
   </select>
+
+  <select id="selectAll" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    e.empId,e.empName,e.empSex,e.empAge,e.empPhone,e.empWage,e.empEmail,e.empPay,e.remark,d.depName
+    from emp e
+    left JOIN
+    dep d
+    on e.depId = d.depId
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from emp
     where empId = #{empid,jdbcType=INTEGER}
   </delete>
+
   <insert id="insert" parameterType="com.bj186.ssm.pojo.Staff">
     <selectKey keyProperty="empid" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into emp (empName, empSex, empAge, 
-      empPhone, empWage, empEmail, 
-      empPay, empLastTime, remark
-      )
+    insert into emp (empName, empSex, empAge, empPhone, empEmail, empPay, remark,depId)
     values (#{empname,jdbcType=VARCHAR}, #{empsex,jdbcType=VARCHAR}, #{empage,jdbcType=INTEGER}, 
-      #{empphone,jdbcType=VARCHAR}, #{empwage,jdbcType=INTEGER}, #{empemail,jdbcType=VARCHAR}, 
-      #{emppay,jdbcType=VARCHAR}, #{emplasttime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+      #{empphone,jdbcType=VARCHAR}, #{empemail,jdbcType=VARCHAR},
+      #{emppay,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{department.depid,jdbcType=INTEGER}
       )
   </insert>
+
   <insert id="insertSelective" parameterType="com.bj186.ssm.pojo.Staff">
     <selectKey keyProperty="empid" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
@@ -105,6 +125,7 @@
       </if>
     </trim>
   </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.bj186.ssm.pojo.Staff">
     update emp
     <set>
@@ -120,24 +141,22 @@
       <if test="empphone != null">
         empPhone = #{empphone,jdbcType=VARCHAR},
       </if>
-      <if test="empwage != null">
-        empWage = #{empwage,jdbcType=INTEGER},
-      </if>
       <if test="empemail != null">
         empEmail = #{empemail,jdbcType=VARCHAR},
       </if>
       <if test="emppay != null">
         empPay = #{emppay,jdbcType=VARCHAR},
       </if>
-      <if test="emplasttime != null">
-        empLastTime = #{emplasttime,jdbcType=TIMESTAMP},
-      </if>
       <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="department.depid != null">
+        depId = #{department.depid,jdbcType=VARCHAR},
       </if>
     </set>
     where empId = #{empid,jdbcType=INTEGER}
   </update>
+
   <update id="updateByPrimaryKey" parameterType="com.bj186.ssm.pojo.Staff">
     update emp
     set empName = #{empname,jdbcType=VARCHAR},
@@ -151,7 +170,9 @@
       remark = #{remark,jdbcType=VARCHAR}
     where empId = #{empid,jdbcType=INTEGER}
   </update>
+
   <select id="getDepartment" resultMap="com.bj186.ssm.mapper.DepartmentMapper.BaseResultMap">
     select depId,depName,depInfor,remark from dep where depId=#{depId}
   </select>
+
 </mapper>

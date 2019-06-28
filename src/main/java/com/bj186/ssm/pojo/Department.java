@@ -11,6 +11,8 @@ public class Department {
 
     private String remark;
 
+    private Integer auth;
+
     private List<Staff> staffs;
 
     public Integer getDepid() {
@@ -51,5 +53,13 @@ public class Department {
 
     public void setStaffs(List<Staff> staffs) {
         this.staffs=staffs;
+    }
+
+    public Integer getAuth() {
+        return auth;
+    }
+
+    public void setAuth(Integer auth) {
+        this.auth = auth;
     }
 }

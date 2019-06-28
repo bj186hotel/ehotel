@@ -5,31 +5,43 @@
     <id column="depId" jdbcType="INTEGER" property="depid" />
     <result column="depName" jdbcType="VARCHAR" property="depname" />
     <result column="depInfor" jdbcType="VARCHAR" property="depinfor" />
+    <result column="auth" jdbcType="INTEGER" property="auth" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <collection column="depId" property="staffs" select="getStaffs" />
   </resultMap>
+
   <sql id="Base_Column_List">
     depId, depName, depInfor, remark
   </sql>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from dep
     where depId = #{depid,jdbcType=INTEGER}
   </select>
+
+  <select id="selectAll" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    depId,depName,depInfor,remark,auth
+    from dep
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from dep
     where depId = #{depid,jdbcType=INTEGER}
   </delete>
+
   <insert id="insert" parameterType="com.bj186.ssm.pojo.Department">
     <selectKey keyProperty="depid" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into dep (depName, depInfor, remark
+    insert into dep (depName, depInfor,auth, remark
       )
-    values (#{depname,jdbcType=VARCHAR}, #{depinfor,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+    values (#{depname,jdbcType=VARCHAR}, #{depinfor,jdbcType=VARCHAR}, #{auth,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}
       )
   </insert>
+
   <insert id="insertSelective" parameterType="com.bj186.ssm.pojo.Department">
     <selectKey keyProperty="depid" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
@@ -58,6 +70,7 @@
       </if>
     </trim>
   </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.bj186.ssm.pojo.Department">
     update dep
     <set>
@@ -67,12 +80,16 @@
       <if test="depinfor != null">
         depInfor = #{depinfor,jdbcType=VARCHAR},
       </if>
+      <if test="auth != null">
+        auth = #{auth,jdbcType=INTEGER},
+      </if>
       <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
       </if>
     </set>
     where depId = #{depid,jdbcType=INTEGER}
   </update>
+
   <update id="updateByPrimaryKey" parameterType="com.bj186.ssm.pojo.Department">
     update dep
     set depName = #{depname,jdbcType=VARCHAR},
@@ -80,7 +97,9 @@
       remark = #{remark,jdbcType=VARCHAR}
     where depId = #{depid,jdbcType=INTEGER}
   </update>
+
   <select id="getStaffs" resultMap="com.bj186.ssm.mapper.StaffMapper.BaseResultMap">
     select empId,empName,empSex,empAge,empPhone,empWage,empEmail,empPay,empLastTime,remark from emp where depId=#{depId} 
   </select>
+
 </mapper>

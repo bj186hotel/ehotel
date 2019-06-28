@@ -1,6 +1,9 @@
 package com.bj186.ssm.mapper;
 
 import com.bj186.ssm.pojo.Staff;
+import com.bj186.ssm.pojo.User;
+
+import java.util.List;
 
 public interface StaffMapper {
     int deleteByPrimaryKey(Integer empid);
@@ -14,4 +17,6 @@ public interface StaffMapper {
     int updateByPrimaryKeySelective(Staff record);
 
     int updateByPrimaryKey(Staff record);
+
+    List<Staff> selectAll();
 }
