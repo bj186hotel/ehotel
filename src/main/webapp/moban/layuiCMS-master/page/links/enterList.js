@@ -11,20 +11,16 @@ layui.config({
 	var linksData = '';
     var linksData2 = '';
 	$.ajax({
-		url :"http://mockjs",
+		url :"/enterOrder/getEnterOrders",
 		dataType : "json",
         async      : true, //请求是否异步，默认为异步，这也是ajax重要特性
         data       : {},    //参数值
-        type       : "GET",   //请求方式
+        contentType: "application/json",
+        type       : "post",   //请求方式
 		success : function(data){
             linksData2 = data;
 			linksData = data.data;
-            //console.log(linksData);
-			if(window.sessionStorage.getItem("addLinks")){
-				var addLinks = window.sessionStorage.getItem("addLinks");
-				linksData = JSON.parse(addLinks).concat(linksData);
-			}
-			//执行加载数据的方法
+            console.log(data);
 			linksList(linksData);
 		}
 	})
@@ -90,23 +86,37 @@ layui.config({
 
 	//添加订单
 	$(".linksAdd_btn").click(function(){
-		var index = layui.layer.open({
-			title : "添加进货定单",
-			type : 2,
-			content : "enterAdd.html",
-			success : function(layero, index){
-				setTimeout(function(){
-					layui.layer.tips('点击此处返回友链列表', '.layui-layer-setwin .layui-layer-close', {
-						tips: 3
-					});
-				},500)
-			}
-		})
-		//改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
-		$(window).resize(function(){
-			layui.layer.full(index);
-		})
-		layui.layer.full(index);
+		var enterOrder = {"usersId":"1001","status":"1"};
+        $.ajax({
+            url: "/enterOrder/addEnterOrder",
+            dataType: "json",
+            contentType: "application/json",
+            async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+            data: JSON.stringify(enterOrder),    //参数值
+            type: "post",   //请求方式
+            success: function (data) {
+                if(data.code == 200){
+                	alert(data.data);
+                    var index = layui.layer.open({
+                        title : "添加进货定单",
+                        type : 2,
+                        content : "enterAdd.html?"+data.data,
+                        success : function(layero, index){
+                            setTimeout(function(){
+                                layui.layer.tips('点击此处返回友链列表', '.layui-layer-setwin .layui-layer-close', {
+                                    tips: 3
+                                });
+                            },500)
+                        }
+                    })
+                    //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+                    $(window).resize(function(){
+                        layui.layer.full(index);
+                    })
+                    layui.layer.full(index);
+                }
+            }
+        })
 	})
 
 	//批量删除
@@ -163,28 +173,6 @@ layui.config({
 
 
 
-    $(function (){//动态添加option
-        $.ajax({
-            url: 'http://mockjs2',
-            dataType : "json",
-            async      : true, //请求是否异步，默认为异步，这也是ajax重要特性
-            data       : {},    //参数值
-            type       : "GET",   //请求方式
-            success:function (backData) {
-                var data = backData.data;
-                for (var i = 0;i < data.length;i++){
-                    $("#rtypeId").append("<option value='"+data[i].rtypeId+"'>"+data[i].rtypeName+"</option>");
-                    console.log("cheng"+data);
-                }
-                form.render();
-
-
-            },
-            error:function (e){
-                console.log(e)
-            }
-        })
-    })
 
 
 
@@ -214,24 +202,35 @@ layui.config({
 			}
 			if(currData.length != 0){
 				for(var i=0;i<currData.length;i++){
-					 console.log(typeof currData[i].orderstate);
                     var html2;
-					if(currData[i].orderstate == true){
-						html2 = '<td><a style="color:#1E9FFF;" target="_blank" href="liveAdd.html">'+'预订中'+'</a></td>'
-					}else {
-                        html2 = '<td>已入住</td>'
-					}
+					if(currData[i].status == 1){
+						html2 = '<td>未审核</td>'
+					}else if(currData[i].status == 2){
+                        html2 = '<td>审核中</td>'
+					}else if(currData[i].status == 3){
+                        html2 = '<td>审核通过</td>'
+                    }else if(currData[i].status == 4){
+                        html2 = '<td>审核失败</td>'
+                    }else if(currData[i].status == 5){
+                        html2 = '<td>已取消</td>'
+                    }else if(currData[i].status == 6){
+                        html2 = '<td>已下单</td>'
+                    }else if(currData[i].status == 7){
+                        html2 = '<td>盘点中</td>'
+                    }else if(currData[i].status == 8){
+                        html2 = '<td>完成</td>'
+                    }
 					dataHtml += '<tr>'
 			    	+'<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose"></td>'
-			    	+'<td align="left">'+currData[i].orderId+'</td>'
-			    	+'<td>'+currData[i].roomId+'</a></td>'
-			    	+'<td>'+currData[i].memId+'</td>'
+			    	+'<td align="left">'+currData[i].enterOrderId+'</td>'
+			    	+'<td>'+currData[i].user+'</a></td>'
+			    	+'<td>'+currData[i].costMoney+'</td>'
 			    	+html2
-			    	+'<td>'+currData[i].Deposit+'</td>'
+			    	+'<td>'+currData[i].modifiedTime2+'</td>'
                         +'<td>'+currData[i].price+'</td>'
 			    	+'<td>'
-					+  '<a class="layui-btn layui-btn-mini links_edit" data-id="'+i+'" href ="enterAdd.html?'+currData[i].enter_order_ID+"&"+i+'"><i class="iconfont icon-edit"></i>编辑</a>'
-                        +  '<a class="layui-btn layui-btn-danger layui-btn-mini" data-id="'+i+'" href ="liveAdd.html?'+currData[i].orderId+"&"+i+'"><i class="layui-icon">&#xe61f;</i> 发起审核</a>'
+					+  '<a class="layui-btn layui-btn-mini links_edit" data-id="'+i+'" href ="enterAdd.html?'+currData[i].enterOrderId+"&"+i+'"><i class="iconfont icon-edit"></i>编辑</a>'
+                        +  '<a class="layui-btn layui-btn-danger layui-btn-mini" data-id="'+i+'" href ="liveAdd.html?'+currData[i].enterOrderId+"&"+i+'"><i class="layui-icon">&#xe61f;</i> 发起审核</a>'
 					+  '<a class="layui-btn layui-btn-danger layui-btn-mini links_del" data-id="'+i+'"><i class="layui-icon">&#xe640;</i> 取消</a>'
 			        +'</td>'
 			    	+'</tr>';

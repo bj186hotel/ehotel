@@ -1,6 +1,8 @@
 
 import com.bj186.ssm.mapper.OrderMapper;
+import com.bj186.ssm.mapper.RoomTypeMapper;
 import com.bj186.ssm.pojo.Order;
+import com.bj186.ssm.pojo.RoomType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Before;
@@ -39,5 +41,16 @@ public class Demo {
         System.out.println(orders1.get(0));
         //List<Order> orders = mapper.selectAll();
         //System.out.println(orders.get(0));
+    }
+
+    @Test
+    public void test14(){
+        SqlSessionFactory sqlSessionFactory = context.getBean("sqlSessionFactory", SqlSessionFactory.class);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        RoomTypeMapper mapper = sqlSession.getMapper(RoomTypeMapper.class);
+       RoomType hhh = mapper.selectByRtypeName("单人房");
+        System.out.println(hhh);
+        //System.out.println(hhh.get(1));
+
     }
 }

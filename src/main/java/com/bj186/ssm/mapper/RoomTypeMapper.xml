@@ -22,6 +22,17 @@
     <result column="isfood" jdbcType="INTEGER" property="isfood" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
+  <resultMap id="BaseResultMap3" type="com.bj186.ssm.pojo.RoomType">
+    <id column="rtypeId" jdbcType="INTEGER" property="rtypeid" />
+    <result column="rtypeName" jdbcType="VARCHAR" property="rtypename" />
+    <result column="resMon" jdbcType="DOUBLE" property="resmon" />
+    <result column="liveNum" jdbcType="INTEGER" property="livenum" />
+    <result column="depMoney" jdbcType="DOUBLE" property="depmoney" />
+    <result column="facility" jdbcType="VARCHAR" property="facility" />
+    <result column="isfood" jdbcType="INTEGER" property="isfood" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <collection column="rtypeId" property="rooms" select="getRooms2" />
+  </resultMap>
   <sql id="Base_Column_List">
     rtypeId, rtypeName, resMon, liveNum, depMoney, facility, isfood, remark
   </sql>
@@ -31,6 +42,14 @@
     from rtype
     where rtypeId = #{rtypeid,jdbcType=INTEGER}
   </select>
+
+  <select id="selectByRtypeName" parameterType="java.lang.String" resultMap="BaseResultMap3">
+    select
+    <include refid="Base_Column_List" />
+    from rtype
+    where rtypeName = #{rtypeName}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from rtype
     where rtypeId = #{rtypeid,jdbcType=INTEGER}
@@ -136,7 +155,11 @@
       remark = #{remark,jdbcType=VARCHAR}
     where rtypeId = #{rtypeid,jdbcType=INTEGER}
   </update>
-  <select id="getRooms" resultMap="com.bj186.ssm.mapper.RoomMapper.BaseResultMap">
+  <select id="getRooms" resultMap="com.bj186.ssm.mapper.RoomMapper.BaseResultMap3">
+    select roomId,roomNum,newPrice,promotion,defImg,state,remark from room where rtypeId=#{rtypeId}
+  </select>
+  <!--获取房间，和房间预定中和入住中的订单-->
+  <select id="getRooms2" resultMap="com.bj186.ssm.mapper.RoomMapper.BaseResultMap3">
     select roomId,roomNum,newPrice,promotion,defImg,state,remark from room where rtypeId=#{rtypeId} 
   </select>
 </mapper>

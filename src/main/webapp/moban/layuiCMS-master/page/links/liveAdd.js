@@ -88,7 +88,7 @@ layui.config({
         for (let i = 0; i < data.length; i++) {
             $('#liveform').append(
                 `
-        <div class="layui-form-item" style="border: #5c60ff ;border-style: solid;border-width: 2px;">
+        <div class="layui-form-item" name="customer" style="border: #5c60ff ;border-style: solid;border-width: 2px;">
             <br>
             	<div class="layui-form-item" >
 		<label class="layui-form-label">真实姓名：</label>
@@ -113,18 +113,26 @@ layui.config({
 
     /*提交入住人员信息*/
     $("#submit").click(function(){
-		for (var i=0;i<mun;i++) {
-			var IDcard = $("#IDcard"+i+"").val();
-			var cusName = $("#cusName"+i+"").val();
-			var remark = $("#remark"+i+"").val();
-            $.ajax({
-                url : "http://mockjs",
-                type : "get",
-                dataType : "json",
-                success : function(data){
+        var customers = [] ;
+        for(var i = 0;i<$("[name='customer']").length;i++){
+            var enterOrder ;
+            enterOrder = '{"cusName":"'+$("[name='customer']").eq(i).find("[name='cusName']").val() +'",';
+            enterOrder += '"IDcard":"'+$("[name='customer']").eq(i).find("[name='IDcard']").val() +'",';
+            enterOrder += '"enter_order_ID":"'+1001 +'",';
+            enterOrder += '"remark":"'+$("[name='customer']").eq(i).find("[name='remark']").val() +'"}';
+            var parse = JSON.parse(enterOrder);
+            enterOrders.unshift(parse);
+        }
+        $.ajax({
+            url: "/enterOrderList/addEnterOrderList",
+            dataType: "json",
+            contentType: "application/json",
+            async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+            data: JSON.stringify(enterOrders),    //参数值
+            type: "post",   //请求方式
+            success: function (data) {
 
-                }
-            })
-		}
+            }
+        })
     })
 })

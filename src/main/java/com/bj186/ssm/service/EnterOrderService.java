@@ -19,7 +19,7 @@ public interface EnterOrderService {
      * @param map
      * @return
      */
-    Boolean addEnterOrder(Map<String,String> map);
+    Integer addEnterOrder(Map<String,String> map);
 
     /**
      * 修改进货单

@@ -11,14 +11,22 @@
         <association column="enter_order_ID" property="enterOrder" select="getEnterOrder"/>
         <association column="Goods_id" property="item" select="getItem"/>
     </resultMap>
+    <resultMap id="BaseResultMap2" type="com.bj186.ssm.pojo.EnterOrderList">
+        <id column="enter_list_ID" jdbcType="INTEGER" property="enterListId"/>
+        <result column="pron_number1" jdbcType="INTEGER" property="pronNumber1"/>
+        <result column="pron_number2" jdbcType="INTEGER" property="pronNumber2"/>
+        <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <association column="Goods_id" property="item" select="getItem"/>
+    </resultMap>
     <sql id="Base_Column_List">
     enter_list_ID, pron_number1, pron_number2, modified_time, remark
   </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="selectByOrderId" parameterType="java.lang.Integer" resultMap="BaseResultMap2">
         select
         <include refid="Base_Column_List"/>
         from enter_order_list
-        where enter_list_ID = #{enterListId,jdbcType=INTEGER}
+        where enter_order_ID = #{enter_order_ID,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from enter_order_list

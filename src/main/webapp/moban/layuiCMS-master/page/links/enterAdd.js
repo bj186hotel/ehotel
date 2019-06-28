@@ -9,10 +9,9 @@ layui.config({
 		$ = layui.jquery;
 
     var data = decodeURI(location.search);//获取从列表页传过来的订单id和可住人数
-    console.log("111111"+typeof data);
     var now = data.split('&');//切割
-    console.log("2222222"+now[0]);
-    var enter_order_ID = now[0];//获取进货单id
+    var enter_order_ID = now[0].substring(1,now[0].length);//获取进货单id
+    var aa = {"enter_order_ID":enter_order_ID};
 
 	/*新增按钮*/
     $("#add").click(function(){
@@ -29,7 +28,7 @@ layui.config({
             var enterOrder ;
             enterOrder = '{"Goods_id":"'+$("[name='enterOrder']").eq(i).find("[name='goods_id'] option:selected").val() +'",';
             enterOrder += '"pron_number":"'+$("[name='enterOrder']").eq(i).find("[name='pron_number']").val() +'",';
-            enterOrder += '"enter_order_ID":"'+1001 +'",';
+            enterOrder += '"enter_order_ID":"'+ enter_order_ID +'",';
             enterOrder += '"remark":"'+$("[name='enterOrder']").eq(i).find("[name='remark']").val() +'"}';
             var parse = JSON.parse(enterOrder);
             enterOrders.unshift(parse);
@@ -42,35 +41,32 @@ layui.config({
             data: JSON.stringify(enterOrders),    //参数值
             type: "post",   //请求方式
             success: function (data) {
-
-            }
-        })
-    })
-
-
-    /*页面初始化加载，通过进货单id加载进货单明细*/
-    $(function (){//动态添加option
-        $.ajax({
-            url: 'http://mockjs2',
-            dataType : "json",
-            async      : true, //请求是否异步，默认为异步，这也是ajax重要特性
-            data       : {},    //参数值
-            type       : "GET",   //请求方式
-            success:function (backData) {
-                var data = backData.data;
-                for (var i = 0;i < data.length;i++){
-                    add();
+                if(data.code == 200){
+                    alert("成功！！")
+                    layer.closeAll();
                 }
-                addDel();
-                form.render();
-
-
-            },
-            error:function (e){
-                console.log(e)
             }
         })
     })
+
+
+    /*编辑页面初始化*/
+    $.ajax({
+        url: "/enterOrderList/getByEnterOrderId",
+        dataType: "json",
+        contentType: "application/json",
+        async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+        data: JSON.stringify(aa),    //参数值
+        type: "post",   //请求方式
+        success: function (data) {
+            if(data.code == 200){
+                for (var i = 0;i<data.data.length;i++){
+                    add(data.data[i]);
+                }
+            }
+        }
+    })
+
 
     /*删除*/
     function addDel() {
@@ -81,7 +77,7 @@ layui.config({
     }
 
     /*动态生成添加入住人员表单*/
-    function add() {  //动态展示商品的方法
+    function add(data) {  //动态展示商品的方法
         $("#liveform").append(`
                
                         <div class="">

@@ -12,7 +12,7 @@ public interface EnterOrderListMapper {
 
     int insertSelective(List<Map<String,String>> list);
 
-    EnterOrderList selectByPrimaryKey(Integer enterListId);
+    List<EnterOrderList> selectByOrderId(Integer enterListId);
 
     int updateByPrimaryKeySelective(EnterOrderList record);
 

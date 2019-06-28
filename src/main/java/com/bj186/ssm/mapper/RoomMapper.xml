@@ -14,6 +14,17 @@
     <collection column="roomId" property="orders" select="getOrders" />
     <collection column="commId" property="comments" select="getComments" />
   </resultMap>
+  <resultMap id="BaseResultMap3" type="com.bj186.ssm.pojo.Room">
+    <id column="roomId" jdbcType="INTEGER" property="roomid" />
+    <result column="roomNum" jdbcType="VARCHAR" property="roomnum" />
+    <result column="newPrice" jdbcType="DOUBLE" property="newprice" />
+    <result column="promotion" jdbcType="INTEGER" property="promotion" />
+    <result column="defImg" jdbcType="VARCHAR" property="defimg" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <collection column="roomId" property="roomImgs" select="getRoomImgs" />
+    <collection column="roomId" property="orders" select="getOrders2" />
+  </resultMap>
   <resultMap id="BaseResultMap2" type="com.bj186.ssm.pojo.Room">
     <id column="roomId" jdbcType="INTEGER" property="roomid" />
     <result column="roomNum" jdbcType="VARCHAR" property="roomnum" />
@@ -138,6 +149,9 @@
   </select>
   <select id="getOrders" resultMap="com.bj186.ssm.mapper.OrderMapper.BaseResultMap2">
     select orderId,orderstate,oldprice,newprice,otherprice,ordertime,personNum,inTime,outTime,remark from orders where roomId=#{roomId} 
+  </select>
+  <select id="getOrders2" resultMap="com.bj186.ssm.mapper.OrderMapper.BaseResultMap2">
+    select orderId,orderstate,oldprice,newprice,otherprice,ordertime,personNum,inTime,outTime,remark from orders where roomId=#{roomId} and orderstate = 2 or orderstate = 4
   </select>
   <select id="getComments" resultMap="com.bj186.ssm.mapper.CommentMapper.BaseResultMap">
     select commId,commText,remark from comm where commId=#{commId} 

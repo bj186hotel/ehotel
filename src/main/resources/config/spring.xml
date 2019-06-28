@@ -12,6 +12,7 @@
     <import resource="classpath:config/spring/spring-bean.xml"/>
     <import resource="classpath:config/spring/spring-jdbc.xml"/>
     <import resource="classpath:config/spring/spring-tx.xml"/>
+    <import resource="classpath:config/spring/spring-shiro.xml"/>
    <!-- <import resource="classpath:config/spring/spring-config.xml"/>-->
 
 </beans>

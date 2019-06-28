@@ -43,7 +43,7 @@
     where enter_order_ID = #{enterOrderId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="map">
-    <selectKey keyProperty="enterOrderId" order="AFTER" resultType="java.lang.Integer">
+    <selectKey keyProperty="enterOrderId" order="AFTER" resultType="java.lang.String">
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into enter_order (cost_money, cost_money2, status, 
@@ -52,7 +52,7 @@
       #{modifiedTime2,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="map">
-    <selectKey keyProperty="enterOrderId" order="AFTER" resultType="java.lang.Integer">
+    <selectKey keyProperty="enterOrderId" order="AFTER" resultType="java.lang.String">
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into enter_order

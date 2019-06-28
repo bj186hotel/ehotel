@@ -26,7 +26,7 @@
     </bean>
 
     <!-- 配置自定义Realm，自定义Realm需要继承org.apache.shiro.realm.AuthorizingRealm -->
-    <bean id="userRealm" class="com.bj183.shiro.UserRealm">
+    <bean id="pointMemberRealm" class="com.bj186.ssm.entity.PointMemberRealm">
         <!-- 配置密码匹配器 -->
         <property name="credentialsMatcher">
             <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
@@ -38,14 +38,23 @@
         </property>
     </bean>
 
+    <bean id="pointRealmAuthenticator" class="com.bj186.ssm.entity.PointRealmAuthenticator">
+        <!-- realmMap -->
+        <property name="definedRealms">
+            <map>
+                <entry key="pointSysShiroDbRealm" value-ref="pointMemberRealm" />
+            </map>
+        </property>
+    </bean>
+
     <!-- 配置权限管理器 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <!-- 加载上面配置好的认证策略-->
-        <property name="authenticator" ref="authenticator"/>
-        <!-- 加载自定义的认证类 -->
+        <property name="authenticator" ref="pointRealmAuthenticator"/>
+        <!-- 多Realm注入 -->
         <property name="realms">
             <list>
-                <ref bean="userRealm" />
+                <ref bean="pointMemberRealm" />
             </list>
         </property>
         <property name="rememberMeManager" ref="rememberMeManager" />
@@ -68,9 +77,9 @@
     -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager" />
-        <property name="loginUrl" value="/login.jsp" />
+        <property name="loginUrl" value="/moban/layuiCMS-master/page/404.html" />
         <property name="successUrl" value="/index.jsp" />
-        <property name="unauthorizedUrl" value="/error.jsp" />
+        <property name="unauthorizedUrl" value="/moban/layuiCMS-master/page/404.html" />
         <!--
             配置需要受保护的页面
             以及访问这些页面需要的权限
@@ -80,25 +89,29 @@
         <property name="filterChainDefinitions">
             <value>
                 <!--加载静态资源-->
-                /js/** = anon
-                /css/** = anon
-                /img/** = anon
+                /moban/layuiCMS-master/css/** = anon
+                /moban/layuiCMS-master/images/** = anon
+                /moban/layuiCMS-master/js/** = anon
+                /moban/layuiCMS-master/layui/**=anon
+                /com/bj186/ssm/** = anon
+                /order/getAllOrder = anon
+                /config/** = anon
+                /properties/** = anon
                 <!--加载不需要认证的页面-->
-                /login.jsp = anon
+                /moban/layuiCMS-master/page/logins/login.html = anon
+                /moban/layuiCMS-master/page/404.html = anon
+                /moban/layuiCMS-master/index.html = anon
                 /login = anon
                 /reg.jsp = anon
                 /reg = anon
                 /logout = logout
                 <!--权限控制-->
-
-                /admin.jsp = roles[admin]
+                /moban/layuiCMS-master/page/** = authc, roles[admin]
                 /user.jsp = roles[user]
                 /list.jsp = roles[all]
                 /call/**=roles[call]
-
-
                 <!--除以上配置外，其他请求全部必须认证-->
-                /** = authc
+                <!--/** = authc-->
             </value>
         </property>
     </bean>

@@ -1,6 +1,5 @@
 package com.bj186.ssm.service;
 
-import com.bj186.ssm.entity.MyException;
 import com.bj186.ssm.pojo.Order;
 
 import java.util.List;
