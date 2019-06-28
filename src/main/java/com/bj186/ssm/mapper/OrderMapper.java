@@ -8,17 +8,17 @@ import java.util.Map;
 public interface OrderMapper {
     int deleteByPrimaryKey(Integer orderid);
 
-    int insert(Order record);
+    int insert(Map<String,Object> Map);
 
-    int insertSelective(Order record);
+    int insertSelective(Map<String,String> Map);
 
     Order selectByPrimaryKey(Integer orderid);
 
     List<Order> selectAll();
 
-    List<Order> selectAllByCondition(Map<String,Object> Map);
+    List<Order> selectAllByCondition(Map<String,String> Map);
 
-    int updateByPrimaryKeySelective(Order record);
+    int updateByPrimaryKeySelective(Map<String,String> Map);
 
-    int updateByPrimaryKey(Order record);
+    int updateByPrimaryKey(Map<String,String> Map);
 }

@@ -143,4 +143,24 @@ public class Member {
     public void setOrders(List<Order> orders) {
         this.orders=orders;
     }
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "memid=" + memid +
+                ", mennum='" + mennum + '\'' +
+                ", memname='" + memname + '\'' +
+                ", phone='" + phone + '\'' +
+                ", mempaw='" + mempaw + '\'' +
+                ", memsex='" + memsex + '\'' +
+                ", idcard='" + idcard + '\'' +
+                ", email='" + email + '\'' +
+                ", memint=" + memint +
+                ", discount=" + discount +
+                ", regisdate=" + regisdate +
+                ", userstate='" + userstate + '\'' +
+                ", remark='" + remark + '\'' +
+                ", orders=" + orders +
+                '}';
+    }
 }

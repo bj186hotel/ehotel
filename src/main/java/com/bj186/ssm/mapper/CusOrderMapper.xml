@@ -6,6 +6,9 @@
     <association column="cusId" property="customer" select="getCustomer" />
     <association column="orderId" property="order" select="getOrder" />
   </resultMap>
+  <select id="selectCusByOrderId" parameterType="map" resultType="com.bj186.ssm.pojo.Customer">
+    SELECT c.cusId,c.IDcard,c.cusName,c.remark FROM cusandorder d left join customer c on d.cusId = c.cusId  where d.orderId = #{orderId,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cusandorder
     where cusorderId = #{cusorderid,jdbcType=INTEGER}

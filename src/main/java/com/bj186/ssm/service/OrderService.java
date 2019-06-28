@@ -1,5 +1,6 @@
 package com.bj186.ssm.service;
 
+import com.bj186.ssm.entity.MyException;
 import com.bj186.ssm.pojo.Order;
 
 import java.util.List;
@@ -15,28 +16,28 @@ import java.util.Map;
 public interface OrderService {
     /**
      * 添加订单
-     * @param order
+     * @param map
      * @return
      */
-    Boolean addOrder(Order order);
+    Boolean addOrder(Map<String,String> map) throws Exception;
 
     /**
      * 修改订单
-     * @param order
+     * @param map
      * @return
      */
-    Boolean updateOrder(Order order);
+    Boolean updateOrder(Map<String,String> map);
 
     /**
      * 查看所有订单
      * @return
      */
-    List<Order> selectAll();
+    List<Order> selectAll() throws Exception;
 
     /**
      * 根据订单条件查询（用户名、房间号、状态、下单时间）
      * @param map
      * @return
      */
-    List<Order> selectAllByConditions(Map<String,Object> map);
+    List<Order> selectAllByConditions(Map<String,String> map);
 }

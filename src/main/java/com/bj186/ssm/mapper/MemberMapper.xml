@@ -42,6 +42,12 @@
     from member
     where memId = #{memid,jdbcType=INTEGER}
   </select>
+  <select id="selectByMenNum" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from member
+    where menNum = #{menNum,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from member
     where memId = #{memid,jdbcType=INTEGER}
@@ -202,6 +208,6 @@
     where memId = #{memid,jdbcType=INTEGER}
   </update>
   <select id="getOrders" resultMap="com.bj186.ssm.mapper.OrderMapper.BaseResultMap">
-    select orderId,orderstate,oldprice,newprice,otherprice,ordertime,personNum,inTime,outTime,remark from orders where memId=#{memId} 
+    select orderId,orderstate,oldprice,newprice,otherprice,ordertime,personNum,inTime,outTime,remark from orders where memId=#{memId}
   </select>
 </mapper>

@@ -8,7 +8,43 @@ layui.config({
 		laydate = layui.laydate,
 		$ = layui.jquery;
 
-	//创建一个编辑器
+    $("#submit").click(function () {
+    	var order ;
+        /*order = '{"roomId":"'+ $("#roomId2 option:selected").val() +'",';*/
+        order = '{"roomId":"'+ 1001 +'",';
+        order += '"menNum":"'+ $("#memId").val() +'",';
+        order += '"usersId":"'+ 1001 +'",';
+        order += '"orderstate":"'+ 1 +'",';
+        order += '"personnum":"'+ $("#personNum").val() +'",';
+        order += '"intime":"'+ $("#inTime").val() +'",';
+        order += '"outtime":"'+ $("#outTime").val() +'",';
+        order += '"remark":"'+ $("#remark").val() +'"}';
+        var parse = JSON.parse(order);
+        console.log(JSON.stringify(parse));
+        $.ajax({
+            url: "/order/addOrder",
+            dataType: "json",
+            contentType: "application/json",
+            async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+            data: JSON.stringify(parse),    //参数值
+            type: "post",   //请求方式
+            success:function (backData) {
+                console.log('成功了'+JSON.stringify(backData));
+                var a = JSON.stringify(backData);
+                console.log('成功了'+backData.msg);
+                console.log('成功了'+a.data);
+                if(backData.code == 0){
+                    window.location.href = "html/index.html";
+                }
+
+            },
+            error:function (e){
+                console.log(e)
+            }
+        })
+	})
+
+	/*//创建一个编辑器
  	var editIndex = layedit.build('links_content');
  	var addLinksArray = [],addLinks;
  	form.on("submit(addLinks)",function(data){
@@ -48,6 +84,6 @@ layui.config({
 	 		parent.location.reload();
         },2000);
  		return false;
- 	})
+ 	})*/
 	
 })

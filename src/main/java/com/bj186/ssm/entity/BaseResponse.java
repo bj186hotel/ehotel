@@ -15,15 +15,9 @@ public class BaseResponse {
     private String code;
     private String msg;
 
-    public void  victory(Object data){
-        code = "200";
-        msg = "成功！";
-        this.data = data;
-    }
-
-    public void defeated(){
-        code = "-1";
-        msg = "失败!";
+    public BaseResponse(String code, String msg) {
+        this.code = code;
+        this.msg = msg;
     }
 
     public Object getData() {

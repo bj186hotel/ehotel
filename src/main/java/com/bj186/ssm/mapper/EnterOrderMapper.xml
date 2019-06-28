@@ -20,11 +20,29 @@
     from enter_order
     where enter_order_ID = #{enterOrderId,jdbcType=INTEGER}
   </select>
+  <select id="selectAll"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from enter_order
+  </select>
+  <select id="selectAllByCondition" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from enter_order
+    <where>
+      <if test="status != null">
+        status = #{status}
+      </if>
+      <if test="enter_order_ID != null">
+        AND enter_order_ID = #{enter_order_ID}
+      </if>
+    </where>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from enter_order
     where enter_order_ID = #{enterOrderId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.bj186.ssm.pojo.EnterOrder">
+  <insert id="insert" parameterType="map">
     <selectKey keyProperty="enterOrderId" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -33,12 +51,15 @@
     values (#{costMoney,jdbcType=DOUBLE}, #{costMoney2,jdbcType=DOUBLE}, #{status,jdbcType=INTEGER}, 
       #{modifiedTime2,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.bj186.ssm.pojo.EnterOrder">
+  <insert id="insertSelective" parameterType="map">
     <selectKey keyProperty="enterOrderId" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into enter_order
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="usersId != null">
+        usersId,
+      </if>
       <if test="costMoney != null">
         cost_money,
       </if>
@@ -56,6 +77,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="usersId != null">
+        #{usersId,jdbcType=INTEGER},
+      </if>
       <if test="costMoney != null">
         #{costMoney,jdbcType=DOUBLE},
       </if>
@@ -73,7 +97,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.bj186.ssm.pojo.EnterOrder">
+  <update id="updateByPrimaryKeySelective" parameterType="map">
     update enter_order
     <set>
       <if test="costMoney != null">
@@ -94,7 +118,7 @@
     </set>
     where enter_order_ID = #{enterOrderId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.bj186.ssm.pojo.EnterOrder">
+  <update id="updateByPrimaryKey" parameterType="map">
     update enter_order
     set cost_money = #{costMoney,jdbcType=DOUBLE},
       cost_money2 = #{costMoney2,jdbcType=DOUBLE},
@@ -104,7 +128,7 @@
     where enter_order_ID = #{enterOrderId,jdbcType=INTEGER}
   </update>
   <select id="getEnterOrderLists" resultMap="com.bj186.ssm.mapper.EnterOrderListMapper.BaseResultMap">
-    select enter_list_ID,pron_number1,pron_number2,modified_time,remark from enter_order_list where depId=#{enterOrderID} 
+    select enter_list_ID,pron_number1,pron_number2,modified_time,remark from enter_order_list where enter_order_ID=#{enterOrderID}
   </select>
   <select id="getUser" resultMap="com.bj186.ssm.mapper.UserMapper.BaseResultMap">
     select userid,password,remark from users where usersId=#{usersId}

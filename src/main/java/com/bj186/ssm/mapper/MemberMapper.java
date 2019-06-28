@@ -11,6 +11,8 @@ public interface MemberMapper {
 
     Member selectByPrimaryKey(Integer memid);
 
+    Member selectByMenNum(String menNum);
+
     int updateByPrimaryKeySelective(Member record);
 
     int updateByPrimaryKey(Member record);

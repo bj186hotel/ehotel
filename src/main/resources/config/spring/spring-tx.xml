@@ -18,7 +18,7 @@
     </tx:advice>
 
     <aop:config>
-        <aop:pointcut id="pc" expression="execution(* com.bj186.ssm.service.impl.UserServiceImpl.*(..))" /> <!--把事务控制在Service层 -->
+        <aop:pointcut id="pc" expression="execution(* com.bj186.ssm.service.*.impl.*.*(..))" /> <!--把事务控制在Service层 -->
         <aop:advisor pointcut-ref="pc" advice-ref="userTxAdvice" />
     </aop:config>
 </beans>

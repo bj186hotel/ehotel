@@ -83,4 +83,18 @@ public class EnterOrder {
     public void setUser(User user) {
         this.user=user;
     }
+
+    @Override
+    public String toString() {
+        return "EnterOrder{" +
+                "enterOrderId=" + enterOrderId +
+                ", costMoney=" + costMoney +
+                ", costMoney2=" + costMoney2 +
+                ", status=" + status +
+                ", modifiedTime2=" + modifiedTime2 +
+                ", modifiedTime=" + modifiedTime +
+                ", enterOrderLists=" + enterOrderLists +
+                ", user=" + user +
+                '}';
+    }
 }

@@ -1,8 +1,6 @@
 
-import com.bj186.ssm.mapper.OrderMapper;
-import com.bj186.ssm.mapper.UserMapper;
-import com.bj186.ssm.pojo.Order;
-import com.bj186.ssm.pojo.User;
+import com.bj186.ssm.mapper.*;
+import com.bj186.ssm.pojo.*;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Before;
@@ -33,13 +31,46 @@ public class Demo {
         SqlSessionFactory sqlSessionFactory = context.getBean("sqlSessionFactory", SqlSessionFactory.class);
         SqlSession sqlSession = sqlSessionFactory.openSession();
         OrderMapper mapper = sqlSession.getMapper(OrderMapper.class);
+       // RoomMapper mapper1 = sqlSession.getMapper(RoomMapper.class);
         Order order = new Order();
-        Map<String,Object> map = new HashMap<>();
-        //map.put("menNum","18482117000");
+        Map<String,String> map = new HashMap<>();
         map.put("roomNum","1-101");
         List<Order> orders1 = mapper.selectAllByCondition(map);
         System.out.println(orders1.get(0));
+        /*map.put("menNum","18482117000");
+        map.put("roomNum","1-101");
+        List<Order> orders1 = mapper.selectAllByCondition(map);
+        System.out.println(orders1.get(0));*/
         //List<Order> orders = mapper.selectAll();
         //System.out.println(orders.get(0));
+        //Room room = mapper1.selectByPrimaryKey(1001);
+        //System.out.println(room);
+    }
+    @Test
+    public void test12(){
+        SqlSessionFactory sqlSessionFactory = context.getBean("sqlSessionFactory", SqlSessionFactory.class);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
+        Member member = mapper.selectByMenNum("18482117000");
+        System.out.println(member);
+
+    }
+
+    @Test
+    public void test3(){
+        SqlSessionFactory sqlSessionFactory = context.getBean("sqlSessionFactory", SqlSessionFactory.class);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        EnterOrderMapper mapper = sqlSession.getMapper(EnterOrderMapper.class);
+       /* List<EnterOrder> enterOrders = mapper.selectAll();
+        System.out.println(enterOrders);*/
+        Map<String,String> map = new HashMap<>();
+        map.put("usersId","1001");
+        map.put("status","1");
+        map.put("usersId","1001");
+        map.put("status","2");
+       // List<EnterOrder> enterOrders = mapper.selectAllByCondition(map);
+        //System.out.println(enterOrders);
+        mapper.insertSelective(map);
+
     }
 }

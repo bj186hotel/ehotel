@@ -92,4 +92,19 @@ public class RoomType {
     public void setRooms(List<Room> rooms) {
         this.rooms=rooms;
     }
+
+    @Override
+    public String toString() {
+        return "RoomType{" +
+                "rtypeid=" + rtypeid +
+                ", rtypename='" + rtypename + '\'' +
+                ", resmon=" + resmon +
+                ", livenum=" + livenum +
+                ", depmoney=" + depmoney +
+                ", facility='" + facility + '\'' +
+                ", isfood=" + isfood +
+                ", remark='" + remark + '\'' +
+                ", rooms=" + rooms +
+                '}';
+    }
 }

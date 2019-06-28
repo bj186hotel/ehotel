@@ -27,10 +27,13 @@
     <collection column="commId" property="comments" select="getComments" />
   </resultMap>
   <sql id="Base_Column_List">
-    roomId, roomNum, newPrice, promotion, defImg, state, remark
+    roomId, rtypeId, roomNum, newPrice, promotion, defImg, state, remark
   </sql>
+  <!--<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT * from room r left join rtype t on r.rtypeId = t.rtypeId left join rimg m on r.roomId = m.roomId left join orders o on r.roomId = o.roomId where r.roomId = #{roomid}
+  </select>-->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from room
     where roomId = #{roomid,jdbcType=INTEGER}
@@ -130,10 +133,10 @@
       remark = #{remark,jdbcType=VARCHAR}
     where roomId = #{roomid,jdbcType=INTEGER}
   </update>
-  <select id="getRoomImgs" resultMap="com.bj186.ssm.mapper.RoomImgMapper.BaseResultMap">
+  <select id="getRoomImgs" resultMap="com.bj186.ssm.mapper.RoomImgMapper.BaseResultMap2">
     select rimgId,status,imgUrl,remark from rimg where roomId=#{roomId} 
   </select>
-  <select id="getOrders" resultMap="com.bj186.ssm.mapper.OrderMapper.BaseResultMap">
+  <select id="getOrders" resultMap="com.bj186.ssm.mapper.OrderMapper.BaseResultMap2">
     select orderId,orderstate,oldprice,newprice,otherprice,ordertime,personNum,inTime,outTime,remark from orders where roomId=#{roomId} 
   </select>
   <select id="getComments" resultMap="com.bj186.ssm.mapper.CommentMapper.BaseResultMap">

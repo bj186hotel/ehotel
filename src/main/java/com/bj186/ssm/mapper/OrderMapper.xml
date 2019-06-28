@@ -1,166 +1,211 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bj186.ssm.mapper.OrderMapper">
-  <resultMap id="BaseResultMap" type="com.bj186.ssm.pojo.Order">
-    <id column="orderId" jdbcType="INTEGER" property="orderid" />
-    <result column="orderstate" jdbcType="VARCHAR" property="orderstate" />
-    <result column="oldprice" jdbcType="DOUBLE" property="oldprice" />
-    <result column="newprice" jdbcType="DOUBLE" property="newprice" />
-    <result column="otherprice" jdbcType="DOUBLE" property="otherprice" />
-    <result column="ordertime" jdbcType="DATE" property="ordertime" />
-    <result column="personNum" jdbcType="INTEGER" property="personnum" />
-    <result column="inTime" jdbcType="TIMESTAMP" property="intime" />
-    <result column="outTime" jdbcType="TIMESTAMP" property="outtime" />
-    <result column="remark" jdbcType="VARCHAR" property="remark" />
-    <association column="roomId" property="room" select="getRoom" />
-    <association column="memId" property="member" select="getMember" />
-    <association column="usersId" property="user" select="getUser" />
-  </resultMap>
-  <sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="com.bj186.ssm.pojo.Order">
+        <id column="orderId" jdbcType="INTEGER" property="orderid"/>
+        <result column="orderstate" jdbcType="VARCHAR" property="orderstate"/>
+        <result column="oldprice" jdbcType="DOUBLE" property="oldprice"/>
+        <result column="newprice" jdbcType="DOUBLE" property="newprice"/>
+        <result column="otherprice" jdbcType="DOUBLE" property="otherprice"/>
+        <result column="ordertime" jdbcType="DATE" property="ordertime"/>
+        <result column="personNum" jdbcType="INTEGER" property="personnum"/>
+        <result column="inTime" jdbcType="TIMESTAMP" property="intime"/>
+        <result column="outTime" jdbcType="TIMESTAMP" property="outtime"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <association column="roomId" property="room" select="getRoom"/>
+        <association column="memId" property="member" select="getMember"/>
+        <association column="usersId" property="user" select="getUser"/>
+    </resultMap>
+    <resultMap id="BaseResultMap2" type="com.bj186.ssm.pojo.Order">
+        <id column="orderId" jdbcType="INTEGER" property="orderid"/>
+        <result column="orderstate" jdbcType="VARCHAR" property="orderstate"/>
+        <result column="oldprice" jdbcType="DOUBLE" property="oldprice"/>
+        <result column="newprice" jdbcType="DOUBLE" property="newprice"/>
+        <result column="otherprice" jdbcType="DOUBLE" property="otherprice"/>
+        <result column="ordertime" jdbcType="DATE" property="ordertime"/>
+        <result column="personNum" jdbcType="INTEGER" property="personnum"/>
+        <result column="inTime" jdbcType="TIMESTAMP" property="intime"/>
+        <result column="outTime" jdbcType="TIMESTAMP" property="outtime"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <association column="memId" property="member" select="getMember"/>
+        <association column="usersId" property="user" select="getUser"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     orderId, orderstate, oldprice, newprice, otherprice, ordertime, personNum, inTime, 
-    outTime, remark
+    outTime, remark,roomId
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from orders
-    where orderId = #{orderid,jdbcType=INTEGER}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>,
+        from orders
+        where orderId = #{orderid,jdbcType=INTEGER}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
     select * from orders o left join room r on o.roomId = r.roomId left join member m on o.memId = m.memId left join users u on o.usersId = u.userid
   </select>
-  <select id="selectAllByCondition" parameterType="map" resultMap="BaseResultMap">
-    select * from orders o left join room r on o.roomId = r.roomId left join member m on o.memId = m.memId left join users u on o.usersId = u.userid
-    <where>
-      <if test="menNum != null">
-        m.menNum = #{menNum}
-      </if>
-      <if test="ordertime != null and ordertime != ''">
-        AND o.ordertime = #{ordertime}
-      </if>
-      <if test="roomNum != null">
-        AND r.roomNum = #{roomNum}
-      </if>
-      <if test="orderstate != null">
-        AND o.orderstate = #{orderstate}
-      </if>
-    </where>
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <select id="selectAllByCondition2" parameterType="map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>,
+        case when ('${roomNum}' != '') then '${roomNum}' else '' end as roomNum
+        from orders
+
+    </select>
+    <select id="selectAllByCondition" parameterType="map" resultMap="BaseResultMap">
+        select * from orders o left join room r on o.roomId = r.roomId left join member m on o.memId
+        = m.memId left join users u on o.usersId = u.userid
+        <where>
+            <if test="orderId != null and orderId != ''">
+                o.orderId = #{orderId}
+            </if>
+            <if test="menNum != null and menNum != ''">
+                m.menNum = #{menNum}
+            </if>
+            <if test="ordertime != null and ordertime != ''">
+                AND o.ordertime = #{ordertime}
+            </if>
+            <if test="roomNum != null and roomNum != ''">
+                AND r.roomNum = #{roomNum}
+            </if>
+            <if test="orderstate != null and orderstate != ''">
+                AND o.orderstate = #{orderstate}
+            </if>
+        </where>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from orders
     where orderId = #{orderid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.bj186.ssm.pojo.Order">
-    <selectKey keyProperty="orderid" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into orders (orderstate, oldprice, newprice, 
-      otherprice, ordertime, personNum, 
-      inTime, outTime, remark
-      )
-    values (#{orderstate,jdbcType=VARCHAR}, #{oldprice,jdbcType=DOUBLE}, #{newprice,jdbcType=DOUBLE}, 
-      #{otherprice,jdbcType=DOUBLE}, #{ordertime,jdbcType=DATE}, #{personnum,jdbcType=INTEGER}, 
-      #{intime,jdbcType=TIMESTAMP}, #{outtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.bj186.ssm.pojo.Order">
-    <selectKey keyProperty="orderid" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into orders
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="orderstate != null">
-        orderstate,
-      </if>
-      <if test="oldprice != null">
-        oldprice,
-      </if>
-      <if test="newprice != null">
-        newprice,
-      </if>
-      <if test="otherprice != null">
-        otherprice,
-      </if>
-      <if test="ordertime != null">
-        ordertime,
-      </if>
-      <if test="personnum != null">
-        personNum,
-      </if>
-      <if test="intime != null">
-        inTime,
-      </if>
-      <if test="outtime != null">
-        outTime,
-      </if>
-      <if test="remark != null">
-        remark,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="orderstate != null">
-        #{orderstate,jdbcType=VARCHAR},
-      </if>
-      <if test="oldprice != null">
-        #{oldprice,jdbcType=DOUBLE},
-      </if>
-      <if test="newprice != null">
+    <insert id="insert" parameterType="map">
+        <selectKey keyProperty="orderid" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into orders (orderstate, oldprice, newprice,
+        otherprice, ordertime, personNum,
+        inTime, outTime, remark
+        )
+        values (#{orderstate,jdbcType=VARCHAR}, #{oldprice,jdbcType=DOUBLE},
         #{newprice,jdbcType=DOUBLE},
-      </if>
-      <if test="otherprice != null">
-        #{otherprice,jdbcType=DOUBLE},
-      </if>
-      <if test="ordertime != null">
-        #{ordertime,jdbcType=DATE},
-      </if>
-      <if test="personnum != null">
-        #{personnum,jdbcType=INTEGER},
-      </if>
-      <if test="intime != null">
-        #{intime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="outtime != null">
-        #{outtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="remark != null">
-        #{remark,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.bj186.ssm.pojo.Order">
-    update orders
-    <set>
-      <if test="orderstate != null">
-        orderstate = #{orderstate,jdbcType=VARCHAR},
-      </if>
-      <if test="oldprice != null">
-        oldprice = #{oldprice,jdbcType=DOUBLE},
-      </if>
-      <if test="newprice != null">
-        newprice = #{newprice,jdbcType=DOUBLE},
-      </if>
-      <if test="otherprice != null">
-        otherprice = #{otherprice,jdbcType=DOUBLE},
-      </if>
-      <if test="ordertime != null">
-        ordertime = #{ordertime,jdbcType=DATE},
-      </if>
-      <if test="personnum != null">
-        personNum = #{personnum,jdbcType=INTEGER},
-      </if>
-      <if test="intime != null">
-        inTime = #{intime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="outtime != null">
-        outTime = #{outtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="remark != null">
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where orderId = #{orderid,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.bj186.ssm.pojo.Order">
+        #{otherprice,jdbcType=DOUBLE}, #{ordertime,jdbcType=DATE}, #{personnum,jdbcType=INTEGER},
+        #{intime,jdbcType=TIMESTAMP}, #{outtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="map">
+        <selectKey keyProperty="orderid" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into orders
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="roomId != null">
+                roomId,
+            </if>
+            <if test="memId != null">
+                memId,
+            </if>
+            <if test="usersId != null">
+                usersId,
+            </if>
+            <if test="orderstate != null">
+                orderstate,
+            </if>
+            <if test="oldprice != null">
+                oldprice,
+            </if>
+            <if test="newprice != null">
+                newprice,
+            </if>
+            <if test="otherprice != null">
+                otherprice,
+            </if>
+            <if test="ordertime != null">
+                ordertime,
+            </if>
+            <if test="personnum != null">
+                personNum,
+            </if>
+            <if test="intime != null">
+                inTime,
+            </if>
+            <if test="outtime != null">
+                outTime,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="roomId != null">
+                #{roomId},
+            </if>
+            <if test="memId != null">
+                #{memId},
+            </if>
+            <if test="usersId != null">
+                #{usersId},
+            </if>
+            <if test="orderstate != null">
+                #{orderstate,jdbcType=VARCHAR},
+            </if>
+            <if test="oldprice != null">
+                #{oldprice,jdbcType=DOUBLE},
+            </if>
+            <if test="newprice != null">
+                #{newprice,jdbcType=DOUBLE},
+            </if>
+            <if test="otherprice != null">
+                #{otherprice,jdbcType=DOUBLE},
+            </if>
+            <if test="ordertime != null">
+                #{ordertime,jdbcType=DATE},
+            </if>
+            <if test="personnum != null">
+                #{personnum,jdbcType=INTEGER},
+            </if>
+            <if test="intime != null">
+                #{intime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="outtime != null">
+                #{outtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="map">
+        update orders
+        <set>
+            <if test="orderstate != null">
+                orderstate = #{orderstate,jdbcType=VARCHAR},
+            </if>
+            <if test="oldprice != null">
+                oldprice = #{oldprice,jdbcType=DOUBLE},
+            </if>
+            <if test="newprice != null">
+                newprice = #{newprice,jdbcType=DOUBLE},
+            </if>
+            <if test="otherprice != null">
+                otherprice = #{otherprice,jdbcType=DOUBLE},
+            </if>
+            <if test="ordertime != null">
+                ordertime = #{ordertime,jdbcType=DATE},
+            </if>
+            <if test="personnum != null">
+                personNum = #{personnum,jdbcType=INTEGER},
+            </if>
+            <if test="intime != null">
+                inTime = #{intime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="outtime != null">
+                outTime = #{outtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where orderId = #{orderid,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="map">
     update orders
     set orderstate = #{orderstate,jdbcType=VARCHAR},
       oldprice = #{oldprice,jdbcType=DOUBLE},
@@ -173,13 +218,15 @@
       remark = #{remark,jdbcType=VARCHAR}
     where orderId = #{orderid,jdbcType=INTEGER}
   </update>
-  <select id="getRoom" resultMap="com.bj186.ssm.mapper.RoomMapper.BaseResultMap2">
-    select * from room r left join rtype t on r.rtypeId = t.rtypeId where r.roomId=#{roomId}
-  </select>
-  <select id="getMember" resultMap="com.bj186.ssm.mapper.MemberMapper.BaseResultMap2">
-    select memId,menNum,memName,phone,memPaw,memsex,IDCard,email,memInt,discount,regisdate,userstate,remark from member where memId=#{memId}
-  </select>
-  <select id="getUser" resultMap="com.bj186.ssm.mapper.UserMapper.BaseResultMap">
+    <select id="getRoom" parameterType="java.util.Map" resultMap="com.bj186.ssm.mapper.RoomMapper.BaseResultMap2">
+        select * from room r left join rtype t on r.rtypeId = t.rtypeId where r.roomId=#{roomId}
+    </select>
+    <select id="getMember" parameterType="map" resultMap="com.bj186.ssm.mapper.MemberMapper.BaseResultMap2">
+        select
+        memId,menNum,memName,phone,memPaw,memsex,IDCard,email,memInt,discount,regisdate,userstate,remark
+        from member where memId=#{memId}
+    </select>
+    <select id="getUser" resultMap="com.bj186.ssm.mapper.UserMapper.BaseResultMap">
     select userid,password,remark from users where userId=#{usersId}
   </select>
 </mapper>
