@@ -82,7 +82,7 @@
     <dependency>  <!--Mybatis的基本包-->
       <groupId>org.mybatis</groupId>
       <artifactId>mybatis</artifactId>
-      <version>3.4.6</version>
+      <version>3.5.6</version>
     </dependency>
     <dependency>  <!--Mybatis和Spring的整合包, 通过Spring管理SqlSessionFactory-->
       <groupId>org.mybatis</groupId>
